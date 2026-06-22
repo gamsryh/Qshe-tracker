@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QSHE Activity Tracker — โรงงานผลิตน้ำมหาสวัสดิ์</title>
+<style>
+:root{
+  --blue:#185FA5;--blue-lt:#E6F1FB;--blue-dk:#0C447C;
+  --green:#3B6D11;--green-lt:#EAF3DE;--green-dk:#27500A;
+  --amber:#854F0B;--amber-lt:#FAEEDA;--amber-dk:#633806;
+  --coral:#993C1D;--coral-lt:#FAECE7;--coral-dk:#712B13;
+  --purple:#534AB7;--purple-lt:#EEEDFE;--purple-dk:#3C3489;
+  --pink:#993556;--pink-lt:#FBEAF0;--pink-dk:#72243E;
+  --gray-lt:#F1EFE8;--gray-dk:#444441;--gray-md:#5F5E5A;
+  --red-bg:#FCEBEB;--red-txt:#791F1F;--red-bd:#F09595;
+  --warn-bg:#FAEEDA;--warn-txt:#633806;--warn-bd:#EF9F27;
+  --ok-bg:#EAF3DE;--ok-txt:#27500A;
+  --text:#1a1a1a;--text-m:#666;--text-h:#aaa;
+  --bd:#e0e0e0;--bd-lt:#f0f0f0;--bg:#f8f8f6;--sur:#fff;
+  --r:8px;--rl:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+nav{background:var(--sur);border-bottom:1px solid var(--bd);padding:0 20px;display:flex;align-items:center;gap:12px;height:52px;position:sticky;top:0;z-index:100}
+.brand{font-size:14px;font-weight:600;color:var(--blue-dk);white-space:nowrap}
+.brand span{font-weight:400;color:var(--text-m);font-size:12px}
+.tabs{display:flex;gap:2px;margin-left:auto}
+.tab{padding:6px 12px;border-radius:var(--r);font-size:13px;cursor:pointer;border:none;background:none;color:var(--text-m)}
+.tab.active{background:var(--blue-lt);color:var(--blue-dk);font-weight:500}
+.tab:hover:not(.active){background:var(--gray-lt)}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:#aaa;margin-left:8px;flex-shrink:0;transition:background .3s}
+.sync-dot.ok{background:#3ecf8e}
+.sync-dot.err{background:#e24b4a}
+.sync-dot.loading{background:#f59e0b;animation:pulse .8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.page{display:none;padding:16px 20px;max-width:1200px;margin:0 auto}
+.page.active{display:block}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:16px}
+.stat{background:var(--sur);border:1px solid var(--bd);border-radius:var(--rl);padding:12px 14px}
+.stat-n{font-size:24px;font-weight:600;line-height:1;margin-bottom:3px}
+.stat-l{font-size:11px;color:var(--text-m)}
+.stat.danger .stat-n{color:var(--red-txt)}
+.stat.warn .stat-n{color:var(--amber-dk)}
+.stat.ok .stat-n{color:var(--green-dk)}
+.stat.info .stat-n{color:var(--blue-dk)}
+.alerts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.alert{border-radius:var(--r);padding:9px 13px;font-size:12px;display:flex;gap:8px}
+.alert.red{background:var(--red-bg);border:1px solid var(--red-bd);color:var(--red-txt)}
+.alert.yellow{background:var(--warn-bg);border:1px solid var(--warn-bd);color:var(--warn-txt)}
+.alert strong{font-weight:600;display:block;margin-bottom:2px}
+.alert ul{margin:0;padding-left:14px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.toolbar select,.toolbar input{font-size:13px;padding:6px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sur);color:var(--text);outline:none}
+.toolbar input{width:180px}
+.btn{font-size:13px;padding:6px 12px;border-radius:var(--r);cursor:pointer;border:1px solid var(--bd);background:var(--sur);color:var(--text);white-space:nowrap}
+.btn:hover{background:var(--gray-lt)}
+.btn.primary{background:var(--blue-dk);color:#fff;border-color:var(--blue-dk)}
+.btn.primary:hover{background:var(--blue)}
+.ml{margin-left:auto}
+.tbl-wrap{background:var(--sur);border:1px solid var(--bd);border-radius:var(--rl);overflow:hidden;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th{padding:9px 11px;text-align:left;font-size:11px;font-weight:600;color:var(--text-m);background:var(--gray-lt);border-bottom:1px solid var(--bd);white-space:nowrap}
+td{padding:9px 11px;border-bottom:1px solid var(--bd-lt);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr.done-row td{opacity:.45}
+tr:hover:not(.sub-row) td{background:#fafafa}
+tr.sub-row td{background:#fdfcfb;padding-top:5px;padding-bottom:5px}
+tr.sub-row:hover td{background:#f7f6f4}
+tr.sub-row td:first-child{padding-left:36px}
+.badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:20px;font-weight:500;white-space:nowrap}
+.b-haccp{background:var(--blue-lt);color:var(--blue-dk)}
+.b-iso14{background:var(--green-lt);color:var(--green-dk)}
+.b-iso45{background:var(--coral-lt);color:var(--coral-dk)}
+.b-wsp{background:var(--purple-lt);color:var(--purple-dk)}
+.b-iso22{background:var(--pink-lt);color:var(--pink-dk)}
+.cat-b{background:var(--gray-lt);color:var(--gray-dk);display:inline-block;font-size:10px;padding:2px 7px;border-radius:20px;white-space:nowrap}
+.parent-tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:var(--amber-lt);color:var(--amber-dk);font-weight:500;margin-left:4px}
+.st-sel{font-size:11px;padding:3px 6px;border-radius:var(--r);border:1px solid var(--bd);background:var(--sur);cursor:pointer;max-width:120px}
+.dp{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.dp.over{background:var(--red-bg);color:var(--red-txt)}
+.dp.w15{background:var(--red-bg);color:var(--red-txt)}
+.dp.w30{background:var(--warn-bg);color:var(--warn-txt)}
+.dp.ok{background:var(--ok-bg);color:var(--ok-txt)}
+.dp.done{background:var(--ok-bg);color:var(--ok-txt)}
+.dp.na{background:var(--gray-lt);color:var(--gray-md);font-weight:400}
+.prog-wrap{display:flex;align-items:center;gap:6px;min-width:100px}
+.prog-bar{flex:1;height:5px;background:var(--bd);border-radius:3px;overflow:hidden;min-width:50px}
+.prog-fill{height:100%;border-radius:3px;transition:width .3s}
+.prog-pct{font-size:11px;font-weight:600;min-width:28px;text-align:right}
+.expand-btn{background:none;border:none;cursor:pointer;font-size:12px;padding:2px 5px;border-radius:4px;color:var(--text-m);line-height:1;transition:transform .2s}
+.expand-btn.open{transform:rotate(90deg)}
+.add-sub-btn{background:none;border:1px dashed var(--bd);color:var(--text-m);font-size:11px;padding:2px 8px;border-radius:var(--r);cursor:pointer}
+.add-sub-btn:hover{border-color:var(--blue);color:var(--blue)}
+.icon-btn{background:none;border:none;cursor:pointer;font-size:14px;padding:2px 5px;border-radius:4px;color:var(--text-h)}
+.icon-btn:hover{color:var(--red-txt);background:var(--red-bg)}
+.icon-btn.edit:hover{color:var(--blue-dk);background:var(--blue-lt)}
+.t-title{font-weight:500;font-size:13px;line-height:1.3}
+.t-owner{font-size:11px;color:var(--text-m);margin-top:1px}
+.sub-title{font-size:12px;color:var(--text);line-height:1.3}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:center;justify-content:center;padding:16px}
+.overlay.open{display:flex}
+.modal{background:var(--sur);border-radius:var(--rl);width:100%;max-width:480px;max-height:90vh;overflow-y:auto}
+.mh{padding:14px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--sur)}
+.mh h3{font-size:14px;font-weight:600}
+.mc{padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.mf{padding:12px 18px;border-top:1px solid var(--bd);display:flex;gap:8px;justify-content:flex-end}
+.fg label{display:block;font-size:11px;font-weight:600;color:var(--text-m);margin-bottom:4px}
+.fg input,.fg select,.fg textarea{width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:var(--r);font-size:13px;font-family:inherit;outline:none}
+.fg input:focus,.fg select:focus{border-color:var(--blue)}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.close-btn{background:none;border:none;font-size:18px;cursor:pointer;color:var(--text-m);line-height:1}
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:16px}
+.dash-card{background:var(--sur);border:1px solid var(--bd);border-radius:var(--rl);padding:14px 16px}
+.dash-card h3{font-size:12px;font-weight:600;color:var(--text-m);margin-bottom:10px}
+.pi{margin-bottom:8px}
+.pi-lbl{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px}
+.pi-bar{height:5px;background:var(--bd);border-radius:3px;overflow:hidden}
+.pi-fill{height:100%;border-radius:3px}
+.up-item{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid var(--bd-lt);align-items:flex-start}
+.up-item:last-child{border-bottom:none}
+.up-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.loading-screen{display:flex;align-items:center;justify-content:center;height:200px;flex-direction:column;gap:12px;color:var(--text-m);font-size:13px}
+.spinner{width:24px;height:24px;border:2px solid var(--bd);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:600px){
+  nav{padding:0 12px}.brand span{display:none}
+  .page{padding:10px 12px}.stats{grid-template-columns:repeat(2,1fr)}
+  .toolbar input{width:100%}.fg2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">QSHE Tracker <span>โรงงานผลิตน้ำมหาสวัสดิ์ ปี 2569</span></div>
+  <div class="tabs">
+    <button class="tab active" onclick="showPage('dashboard',this)">ภาพรวม</button>
+    <button class="tab" onclick="showPage('tasks',this)">รายการงาน</button>
+    <button class="tab" onclick="showPage('gantt',this)">ไทม์ไลน์</button>
+  </div>
+  <div class="sync-dot" id="sync-dot" title="สถานะการเชื่อมต่อ"></div>
+</nav>
+
+<div class="page active" id="page-dashboard">
+  <div class="stats" id="db-stats"></div>
+  <div class="alerts" id="db-alerts"></div>
+  <div class="dash-grid">
+    <div class="dash-card"><h3>ความคืบหน้าแต่ละระบบ</h3><div id="db-prog"></div></div>
+    <div class="dash-card"><h3>งานที่ใกล้ครบกำหนด (30 วัน)</h3><div id="db-up"></div></div>
+  </div>
+</div>
+
+<div class="page" id="page-tasks">
+  <div class="alerts" id="tk-alerts"></div>
+  <div class="toolbar">
+    <input type="text" id="s-search" placeholder="ค้นหา..." oninput="renderTasks()">
+    <select id="s-sys" onchange="renderTasks()">
+      <option value="">ทุกระบบ</option>
+      <option>HACCP</option><option>ISO14001</option><option>ISO45001</option>
+      <option>WSP</option><option>ISO22301</option>
+    </select>
+    <select id="s-cat" onchange="renderTasks()">
+      <option value="">ทุกประเภท</option>
+      <option>ทบทวนเอกสาร</option><option>ตรวจประเมิน</option><option>ฝึกอบรม</option>
+      <option>ซ้อมแผน</option><option>ทบทวนผู้บริหาร</option><option>รายงานกฎหมาย</option><option>ตรวจสอบ/วัด</option>
+    </select>
+    <select id="s-st" onchange="renderTasks()">
+      <option value="">ทุกสถานะ</option>
+      <option value="pending">รอดำเนินการ</option>
+      <option value="in_progress">กำลังดำเนินการ</option>
+      <option value="done">เสร็จแล้ว</option>
+    </select>
+    <button class="btn primary ml" onclick="openModal()">+ เพิ่มงาน</button>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th style="width:3%"></th>
+        <th style="width:33%">งาน / ผู้รับผิดชอบ</th>
+        <th>ระบบ</th><th>ประเภท</th><th>กำหนดเสร็จ</th>
+        <th>ความคืบหน้า</th><th>สถานะ</th><th>คงเหลือ</th><th></th>
+      </tr></thead>
+      <tbody id="task-tbody"><tr><td colspan="9"><div class="loading-screen"><div class="spinner"></div>กำลังโหลดข้อมูล...</div></td></tr></tbody>
+    </table>
+  </div>
+  <div id="task-count" style="font-size:11px;color:var(--text-m);margin-top:8px;text-align:right"></div>
+</div>
+
+<div class="page" id="page-gantt">
+  <div style="margin-bottom:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    <select id="g-sys" onchange="renderGantt()" style="font-size:13px;padding:6px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sur)">
+      <option value="">ทุกระบบ</option>
+      <option>HACCP</option><option>ISO14001</option><option>ISO45001</option>
+      <option>WSP</option><option>ISO22301</option>
+    </select>
+    <span style="font-size:11px;color:var(--text-m)">เส้นแดง = วันนี้</span>
+  </div>
+  <div style="background:var(--sur);border:1px solid var(--bd);border-radius:var(--rl);overflow:hidden;overflow-x:auto" id="gantt-wrap"></div>
+</div>
+
+<!-- MODAL งานหลัก -->
+<div class="overlay" id="modal">
+  <div class="modal">
+    <div class="mh"><h3 id="m-title-lbl">เพิ่มงาน</h3><button class="close-btn" onclick="closeModal()">×</button></div>
+    <div class="mc">
+      <input type="hidden" id="m-id">
+      <div class="fg"><label>ชื่องาน *</label><input type="text" id="m-title" placeholder="ชื่องาน"></div>
+      <div class="fg2">
+        <div class="fg"><label>ระบบ *</label>
+          <select id="m-sys"><option value="HACCP">HACCP</option><option value="ISO14001">ISO 14001</option><option value="ISO45001">ISO 45001</option><option value="WSP">WSP</option><option value="ISO22301">ISO 22301</option></select>
+        </div>
+        <div class="fg"><label>ประเภท *</label>
+          <select id="m-cat"><option>ทบทวนเอกสาร</option><option>ตรวจประเมิน</option><option>ฝึกอบรม</option><option>ซ้อมแผน</option><option>ทบทวนผู้บริหาร</option><option>รายงานกฎหมาย</option><option>ตรวจสอบ/วัด</option></select>
+        </div>
+      </div>
+      <div class="fg2">
+        <div class="fg"><label>วันกำหนดเสร็จ *</label><input type="date" id="m-due"></div>
+        <div class="fg"><label>สถานะ</label>
+          <select id="m-status"><option value="pending">รอดำเนินการ</option><option value="in_progress">กำลังดำเนินการ</option><option value="done">เสร็จแล้ว</option></select>
+        </div>
+      </div>
+      <div class="fg"><label>ผู้รับผิดชอบ</label><input type="text" id="m-owner" placeholder="เช่น สบค.ฝผม."></div>
+      <div class="fg"><label>หมายเหตุ</label><textarea id="m-note" rows="2" style="resize:vertical"></textarea></div>
+    </div>
+    <div class="mf">
+      <button class="btn" onclick="closeModal()">ยกเลิก</button>
+      <button class="btn primary" onclick="saveTask()">บันทึก</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL งานย่อย -->
+<div class="overlay" id="sub-modal">
+  <div class="modal">
+    <div class="mh"><h3 id="sm-title-lbl">เพิ่มงานย่อย</h3><button class="close-btn" onclick="closeSubModal()">×</button></div>
+    <div class="mc">
+      <input type="hidden" id="sm-parent-id">
+      <input type="hidden" id="sm-id">
+      <div style="font-size:12px;color:var(--text-m);background:var(--gray-lt);border-radius:var(--r);padding:7px 10px" id="sm-parent-name"></div>
+      <div class="fg"><label>ชื่องานย่อย *</label><input type="text" id="sm-title" placeholder="ชื่องานย่อย"></div>
+      <div class="fg2">
+        <div class="fg"><label>วันกำหนดเสร็จ</label><input type="date" id="sm-due"></div>
+        <div class="fg"><label>สถานะ</label>
+          <select id="sm-status"><option value="pending">รอดำเนินการ</option><option value="in_progress">กำลังดำเนินการ</option><option value="done">เสร็จแล้ว</option></select>
+        </div>
+      </div>
+      <div class="fg"><label>ผู้รับผิดชอบ</label><input type="text" id="sm-owner" placeholder="ไม่ระบุ = ใช้ของงานหลัก"></div>
+      <div class="fg"><label>หมายเหตุ</label><input type="text" id="sm-note" placeholder="เช่น online / on-site"></div>
+    </div>
+    <div class="mf">
+      <button class="btn" onclick="closeSubModal()">ยกเลิก</button>
+      <button class="btn primary" onclick="saveSubTask()">บันทึก</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── SUPABASE CONFIG ───────────────────────────────────────
+const SB_URL = 'https://cnspicpdyfwdzxsclhyu.supabase.co';
+const SB_KEY = 'sb_publishable_ZQ976WMLKZIG9yYMkobKKA_2NTJyuAi';
+const HEADERS = {'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY};
+
+async function sbGet(path){
+  const r=await fetch(SB_URL+'/rest/v1/'+path,{headers:{...HEADERS,'Prefer':'return=representation'}});
+  if(!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+async function sbPost(path,body){
+  const r=await fetch(SB_URL+'/rest/v1/'+path,{method:'POST',headers:{...HEADERS,'Prefer':'return=representation'},body:JSON.stringify(body)});
+  if(!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+async function sbPatch(path,body){
+  const r=await fetch(SB_URL+'/rest/v1/'+path,{method:'PATCH',headers:{...HEADERS,'Prefer':'return=representation'},body:JSON.stringify(body)});
+  if(!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+async function sbDelete(path){
+  const r=await fetch(SB_URL+'/rest/v1/'+path,{method:'DELETE',headers:HEADERS});
+  if(!r.ok) throw new Error(await r.text());
+}
+
+// ── STATE ─────────────────────────────────────────────────
+let tasks=[], expanded={}, editingId=null, editingSubId=null, editingSubParent=null;
+
+function setSyncDot(state){
+  const d=document.getElementById('sync-dot');
+  d.className='sync-dot '+state;
+  d.title=state==='ok'?'เชื่อมต่อแล้ว':state==='err'?'เชื่อมต่อไม่ได้':'กำลังโหลด...';
+}
+
+// ── LOAD FROM SUPABASE ───────────────────────────────────
+async function loadTasks(){
+  setSyncDot('loading');
+  try{
+    const rows = await sbGet('tasks?select=*&order=sort_order,id');
+    // จัดโครงสร้าง parent/child
+    const parents = rows.filter(r=>!r.parent_id);
+    parents.forEach(p=>{
+      p.subs = rows.filter(r=>r.parent_id===p.id);
+    });
+    tasks = parents;
+    setSyncDot('ok');
+  }catch(e){
+    setSyncDot('err');
+    console.error(e);
+  }
+}
+
+// ── SEED DATA (ใส่ข้อมูลเริ่มต้น) ────────────────────────
+async function seedIfEmpty(){
+  setSyncDot('loading');
+  try{
+    const existing = await sbGet('tasks?select=id&limit=1');
+    if(existing.length>0){ await loadTasks(); return; }
+    // ข้อมูลเริ่มต้นจากเอกสารจริง
+    const seed = [
+      {title:'ทบทวนบันทึกข้อตกลง',system:'HACCP',category:'ทบทวนเอกสาร',due:'2025-11-30',status:'done',owner:'สบค.ฝผม.',note:'',sort_order:1},
+      {title:'ทบทวนเอกสารในระบบ GHP & HACCP',system:'HACCP',category:'ทบทวนเอกสาร',due:'2026-03-31',status:'done',owner:'สบค.ฝผม.',note:'',sort_order:2},
+      {title:'Internal Audit ระบบ HACCP',system:'HACCP',category:'ตรวจประเมิน',due:'2026-05-31',status:'done',owner:'คณะทำงาน',note:'',sort_order:3},
+      {title:'External Audit HACCP (Re-Certification)',system:'HACCP',category:'ตรวจประเมิน',due:'2026-08-31',status:'pending',owner:'คณะทำงาน',note:'Re-Certification',sort_order:4},
+      {title:'ประชุมทบทวนผู้บริหาร GHP & HACCP',system:'HACCP',category:'ทบทวนผู้บริหาร',due:'2026-09-30',status:'pending',owner:'คณะทำงาน',note:'',sort_order:5},
+      {title:'ทดสอบย้อนกลับของผลิตภัณฑ์',system:'HACCP',category:'ซ้อมแผน',due:'2026-06-30',status:'in_progress',owner:'กผจ.ฝผม. / สคน.4',note:'',sort_order:6},
+      {title:'ฝึกซ้อมเรียกคืนผลิตภัณฑ์',system:'HACCP',category:'ซ้อมแผน',due:'2026-07-31',status:'pending',owner:'กผจ.ฝผม. / สคน.4',note:'',sort_order:7},
+      {title:'อบรมตามระบบ GHP & HACCP',system:'HACCP',category:'ฝึกอบรม',due:'2026-07-31',status:'in_progress',owner:'ฝพบ.',note:'5 หลักสูตร',sort_order:8},
+      {title:'ทบทวนเอกสารในระบบ ISO 14001',system:'ISO14001',category:'ทบทวนเอกสาร',due:'2026-03-31',status:'done',owner:'สบค.ฝผม.',note:'',sort_order:9},
+      {title:'ทบทวนการประเมิน Environmental Aspects',system:'ISO14001',category:'ทบทวนเอกสาร',due:'2026-06-30',status:'in_progress',owner:'คณะทำงาน',note:'',sort_order:10},
+      {title:'Internal Audit ระบบ ISO 14001',system:'ISO14001',category:'ตรวจประเมิน',due:'2026-07-31',status:'pending',owner:'คณะทำงาน',note:'',sort_order:11},
+      {title:'External Audit ระบบ ISO 14001',system:'ISO14001',category:'ตรวจประเมิน',due:'2026-09-30',status:'pending',owner:'คณะทำงาน',note:'',sort_order:12},
+      {title:'ประชุมทบทวนผู้บริหาร ISO 14001',system:'ISO14001',category:'ทบทวนผู้บริหาร',due:'2026-09-30',status:'pending',owner:'คณะทำงาน',note:'',sort_order:13},
+      {title:'ซ้อมแผนสารคลอรีนรั่วไหล',system:'ISO14001',category:'ซ้อมแผน',due:'2026-05-31',status:'done',owner:'กผจ.ฝผม.',note:'',sort_order:14},
+      {title:'ซ้อมแผนสารเคมีอื่น',system:'ISO14001',category:'ซ้อมแผน',due:'2026-08-31',status:'pending',owner:'กบง./กผจ.ฝผม.',note:'',sort_order:15},
+      {title:'อบรมตามข้อกำหนดระบบ ISO 14001',system:'ISO14001',category:'ฝึกอบรม',due:'2026-06-30',status:'in_progress',owner:'ฝพบ.',note:'3 หลักสูตร',sort_order:16},
+      {title:'ตรวจสอบอุปกรณ์และระบบตามกฎหมาย',system:'ISO14001',category:'ตรวจสอบ/วัด',due:'2026-09-30',status:'pending',owner:'สบค.ฝผม.',note:'',sort_order:17},
+      {title:'ทบทวนเอกสารและประเมินความสอดคล้องตามกฎหมาย',system:'ISO45001',category:'ทบทวนเอกสาร',due:'2026-03-31',status:'done',owner:'สบค.ฝผม.',note:'',sort_order:18},
+      {title:'Internal Audit ระบบ ISO 45001',system:'ISO45001',category:'ตรวจประเมิน',due:'2026-07-31',status:'pending',owner:'คณะทำงาน',note:'',sort_order:19},
+      {title:'External Audit ISO 45001 (Surveillance #1)',system:'ISO45001',category:'ตรวจประเมิน',due:'2026-08-31',status:'pending',owner:'สบค.ฝผม.',note:'Surveillance #1',sort_order:20},
+      {title:'ประชุมทบทวนผู้บริหาร ISO 45001',system:'ISO45001',category:'ทบทวนผู้บริหาร',due:'2026-09-30',status:'pending',owner:'สบค.ฝผม.',note:'',sort_order:21},
+      {title:'ส่งรายงานกิจกรรมตามกฎหมาย OH&S',system:'ISO45001',category:'รายงานกฎหมาย',due:'2026-03-31',status:'done',owner:'สบร.2 / สบค.ฝผม.',note:'10 แบบฟอร์ม',sort_order:22},
+      {title:'ฝึกซ้อมแผนปฏิบัติการฉุกเฉิน',system:'ISO45001',category:'ซ้อมแผน',due:'2026-09-30',status:'in_progress',owner:'สบค.ฝผม.',note:'7 แผน',sort_order:23},
+      {title:'อบรมตามข้อกำหนด ISO 45001 / ตามกฎหมาย',system:'ISO45001',category:'ฝึกอบรม',due:'2026-09-30',status:'in_progress',owner:'ฝพบ.',note:'22 หลักสูตร',sort_order:24},
+      {title:'ตรวจวัดสภาพแวดล้อมการทำงาน',system:'ISO45001',category:'ตรวจสอบ/วัด',due:'2026-07-31',status:'pending',owner:'สบค.ฝผม.',note:'จัดจ้างผู้รับจ้าง',sort_order:25},
+      {title:'ตรวจสุขภาพพนักงานที่สัมผัสผลิตภัณฑ์',system:'ISO45001',category:'ตรวจสอบ/วัด',due:'2026-08-31',status:'pending',owner:'กปช.ผวก.',note:'',sort_order:26},
+      {title:'จัดกิจกรรม Safety Day',system:'ISO45001',category:'ฝึกอบรม',due:'2026-09-30',status:'pending',owner:'สบค.ฝผม.',note:'',sort_order:27},
+      {title:'ทบทวน WSP/HACCP 10 โมดูล',system:'WSP',category:'ทบทวนเอกสาร',due:'2026-11-30',status:'pending',owner:'คณะทำงาน',note:'',sort_order:28},
+      {title:'ทบทวนผลดำเนินงาน/สำรวจความเสี่ยง WSP',system:'WSP',category:'ทบทวนเอกสาร',due:'2026-11-30',status:'pending',owner:'คณะทำงาน',note:'',sort_order:29},
+      {title:'อบรมเชิงปฏิบัติการจัดทำเอกสาร ISO 22301',system:'ISO22301',category:'ฝึกอบรม',due:'2026-10-31',status:'pending',owner:'คณะทำงาน BCP',note:'',sort_order:30},
+      {title:'ฝึกซ้อมแผน BCM',system:'ISO22301',category:'ซ้อมแผน',due:'2026-08-31',status:'pending',owner:'คณะทำงาน BCP',note:'',sort_order:31},
+      {title:'Internal Audit ระบบ ISO 22301',system:'ISO22301',category:'ตรวจประเมิน',due:'2026-09-30',status:'pending',owner:'คณะทำงาน BCP',note:'',sort_order:32},
+    ];
+    // insert ทีละตัว เพื่อเก็บ id
+    const subDef = {
+      8:[
+        {title:'ทบทวนข้อกำหนดระบบ GHP & HACCP',due:'2026-02-28',status:'done',owner:'ฝพบ.',note:'online'},
+        {title:'เทคนิค Internal Audit HACCP',due:'2026-04-30',status:'done',owner:'ฝพบ.',note:'online'},
+        {title:'สุขาภิบาลโรงงานและสุขลักษณะส่วนบุคคล',due:'2026-06-30',status:'done',owner:'ฝพบ.',note:'on-site'},
+        {title:'การประยุกต์ใช้ระบบควบคุมสารก่อภูมิแพ้',due:'2026-07-31',status:'in_progress',owner:'ฝพบ.',note:'on-site'},
+        {title:'การปฏิบัติงาน ณ จุด CCP',due:'2026-07-31',status:'pending',owner:'สบค. / สคบ.',note:'on-site'},
+      ],
+      23:[
+        {title:'ซ้อมแผนสารคลอรีนรั่วไหล',due:'2026-04-30',status:'done',owner:'กผจ.ฝผม.',note:'กลางคืน+กลางวัน'},
+        {title:'ซ้อมแผนน้ำมันหล่อลื่นรั่วไหล',due:'2026-06-30',status:'in_progress',owner:'กบง.ฝผม.',note:''},
+        {title:'ซ้อมดับเพลิงและอพยพหนีไฟ',due:'2026-05-31',status:'done',owner:'สบค.ฝผม.',note:''},
+        {title:'ซ้อมแผนสารส้ม/PAC/โซดาไฟรั่วไหล',due:'2026-07-31',status:'pending',owner:'กผจ.ฝผม.',note:''},
+        {title:'ซ้อมแผนฉุกเฉินน้ำท่วม',due:'2026-08-31',status:'pending',owner:'สบค.ฝผม.',note:''},
+        {title:'ซ้อมแผนฉุกเฉินด้านคุณภาพน้ำ',due:'2026-08-31',status:'pending',owner:'สคบ.ฝผม.',note:''},
+        {title:'เขียนแผนเตรียมพร้อมแผ่นดินไหว',due:'2026-09-30',status:'pending',owner:'สบค.ฝผม.',note:''},
+      ],
+    };
+    for(let i=0;i<seed.length;i++){
+      const inserted = await sbPost('tasks',seed[i]);
+      const newId = inserted[0].id;
+      const sortKey = seed[i].sort_order;
+      if(subDef[sortKey]){
+        for(const s of subDef[sortKey]){
+          await sbPost('tasks',{...s,parent_id:newId,system:seed[i].system,category:seed[i].category,sort_order:0});
+        }
+      }
+    }
+    await loadTasks();
+  }catch(e){
+    setSyncDot('err');
+    console.error('seed error',e);
+  }
+}
+
+// ── HELPERS ───────────────────────────────────────────────
+function dd(due){if(!due)return 9999;const d=new Date(due);d.setHours(0,0,0,0);const t=new Date();t.setHours(0,0,0,0);return Math.round((d-t)/86400000);}
+function alertLv(task){
+  if(task.status==='done')return'done';
+  const d=dd(task.due);
+  if(d<0)return'over';if(d<=15)return'w15';if(d<=30)return'w30';return'ok';
+}
+function fmtDate(s){if(!s)return'-';return new Date(s).toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'2-digit'});}
+function subProg(task){
+  if(!task.subs||!task.subs.length)return null;
+  const done=task.subs.filter(s=>s.status==='done').length;
+  return{done,total:task.subs.length,pct:Math.round(done/task.subs.length*100)};
+}
+function daysPill(task,isSub=false){
+  if(task.status==='done')return'<span class="dp done">✓ เสร็จ</span>';
+  if(!task.due&&isSub)return'<span class="dp na">—</span>';
+  const d=dd(task.due);
+  if(d<0)return`<span class="dp over">⚠ เกิน ${Math.abs(d)} วัน</span>`;
+  if(d<=15)return`<span class="dp w15">🔴 ${d} วัน</span>`;
+  if(d<=30)return`<span class="dp w30">🟡 ${d} วัน</span>`;
+  return`<span class="dp ok">${d} วัน</span>`;
+}
+const SYS_BD={HACCP:'b-haccp',ISO14001:'b-iso14',ISO45001:'b-iso45',WSP:'b-wsp',ISO22301:'b-iso22'};
+const SYS_COL={HACCP:'#185FA5',ISO14001:'#3B6D11',ISO45001:'#993C1D',WSP:'#534AB7',ISO22301:'#993556'};
+const ST_LBL={pending:'รอดำเนินการ',in_progress:'กำลังดำเนินการ',done:'เสร็จแล้ว'};
+
+function buildAlerts(){
+  const over=tasks.filter(t=>t.status!=='done'&&dd(t.due)<0);
+  const w15=tasks.filter(t=>t.status!=='done'&&dd(t.due)>=0&&dd(t.due)<=15);
+  const w30=tasks.filter(t=>t.status!=='done'&&dd(t.due)>15&&dd(t.due)<=30);
+  let h='';
+  if(over.length)h+=`<div class="alert red"><div><strong>⚠ เกินกำหนด ${over.length} งาน</strong><ul>${over.map(t=>`<li>${t.title}</li>`).join('')}</ul></div></div>`;
+  if(w15.length)h+=`<div class="alert red"><div><strong>🔴 แจ้งเตือน 15 วัน — ${w15.length} งาน</strong><ul>${w15.map(t=>`<li>${t.title} (เหลือ ${dd(t.due)} วัน)</li>`).join('')}</ul></div></div>`;
+  if(w30.length)h+=`<div class="alert yellow"><div><strong>🟡 แจ้งเตือน 30 วัน — ${w30.length} งาน</strong><ul>${w30.map(t=>`<li>${t.title} (เหลือ ${dd(t.due)} วัน)</li>`).join('')}</ul></div></div>`;
+  return h||'<div style="font-size:12px;color:var(--ok-txt);padding:4px 0">✓ ไม่มีงานที่ต้องแจ้งเตือน</div>';
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────
+function renderDashboard(){
+  const total=tasks.length;
+  const done=tasks.filter(t=>t.status==='done').length;
+  const over=tasks.filter(t=>t.status!=='done'&&dd(t.due)<0).length;
+  const w15=tasks.filter(t=>t.status!=='done'&&dd(t.due)>=0&&dd(t.due)<=15).length;
+  const w30=tasks.filter(t=>t.status!=='done'&&dd(t.due)>15&&dd(t.due)<=30).length;
+  const inp=tasks.filter(t=>t.status==='in_progress').length;
+  document.getElementById('db-stats').innerHTML=`
+    <div class="stat"><div class="stat-n">${total}</div><div class="stat-l">งานทั้งหมด</div></div>
+    <div class="stat ok"><div class="stat-n">${done}</div><div class="stat-l">เสร็จแล้ว</div></div>
+    <div class="stat info"><div class="stat-n">${inp}</div><div class="stat-l">กำลังดำเนินการ</div></div>
+    <div class="stat warn"><div class="stat-n">${w30}</div><div class="stat-l">แจ้งเตือน 30 วัน</div></div>
+    <div class="stat danger"><div class="stat-n">${w15}</div><div class="stat-l">แจ้งเตือน 15 วัน</div></div>
+    <div class="stat danger"><div class="stat-n">${over}</div><div class="stat-l">เกินกำหนด</div></div>`;
+  document.getElementById('db-alerts').innerHTML=buildAlerts();
+  const sysList=['HACCP','ISO14001','ISO45001','WSP','ISO22301'];
+  const sysN={HACCP:'HACCP/GHP',ISO14001:'ISO 14001',ISO45001:'ISO 45001',WSP:'WSP',ISO22301:'ISO 22301'};
+  document.getElementById('db-prog').innerHTML=sysList.map(s=>{
+    const all=tasks.filter(t=>t.system===s);
+    let ti=0,di=0;
+    all.forEach(t=>{if(t.subs&&t.subs.length){ti+=t.subs.length;di+=t.subs.filter(x=>x.status==='done').length;}else{ti++;if(t.status==='done')di++;}});
+    const pct=ti?Math.round(di/ti*100):0;
+    return`<div class="pi"><div class="pi-lbl"><span>${sysN[s]}</span><span>${di}/${ti} (${pct}%)</span></div><div class="pi-bar"><div class="pi-fill" style="width:${pct}%;background:${SYS_COL[s]}"></div></div></div>`;
+  }).join('');
+  const up=tasks.filter(t=>t.status!=='done'&&dd(t.due)>=0&&dd(t.due)<=30).sort((a,b)=>new Date(a.due)-new Date(b.due)).slice(0,8);
+  document.getElementById('db-up').innerHTML=up.length?up.map(t=>{
+    const d=dd(t.due);const col=d<=15?'#E24B4A':'#BA7517';
+    const p=subProg(t);
+    return`<div class="up-item"><div class="up-dot" style="background:${col}"></div><div><div style="font-size:12px;font-weight:500">${t.title}</div><div style="font-size:11px;color:var(--text-m)">${t.system} · ${fmtDate(t.due)} · เหลือ ${d} วัน${p?` · ย่อย ${p.done}/${p.total}`:''}</div></div></div>`;
+  }).join(''):'<div style="font-size:12px;color:var(--text-m);padding:6px 0">ไม่มีงานใกล้ครบกำหนดใน 30 วัน</div>';
+}
+
+// ── TASKS TABLE ───────────────────────────────────────────
+function renderTasks(){
+  const search=document.getElementById('s-search').value.toLowerCase();
+  const fs=document.getElementById('s-sys').value;
+  const fc=document.getElementById('s-cat').value;
+  const fst=document.getElementById('s-st').value;
+  document.getElementById('tk-alerts').innerHTML=buildAlerts();
+  let filtered=tasks.filter(t=>{
+    if(search&&!t.title.toLowerCase().includes(search)&&!(t.owner||'').toLowerCase().includes(search))return false;
+    if(fs&&t.system!==fs)return false;
+    if(fc&&t.category!==fc)return false;
+    if(fst&&t.status!==fst)return false;
+    return true;
+  }).sort((a,b)=>{const o={over:0,w15:1,w30:2,ok:3,done:4};return(o[alertLv(a)]||3)-(o[alertLv(b)]||3)||new Date(a.due)-new Date(b.due);});
+  let rows='';
+  filtered.forEach(t=>{
+    const hasSubs=t.subs&&t.subs.length>0;
+    const isExp=!!expanded[t.id];
+    const p=hasSubs?subProg(t):null;
+    let progCell=p?`<div class="prog-wrap"><div class="prog-bar"><div class="prog-fill" style="width:${p.pct}%;background:${p.pct===100?'var(--green)':'var(--blue)'}"></div></div><span class="prog-pct" style="color:${p.pct===100?'var(--green-dk)':'var(--blue-dk)'}">${p.pct}%</span></div><div style="font-size:10px;color:var(--text-m);margin-top:2px">${p.done}/${p.total} งานย่อย</div>`:'<span style="font-size:11px;color:var(--text-h)">—</span>';
+    rows+=`<tr class="${t.status==='done'?'done-row':''}">
+      <td style="text-align:center">${hasSubs?`<button class="expand-btn ${isExp?'open':''}" onclick="toggleExpand(${t.id})">▶</button>`:''}</td>
+      <td><div class="t-title">${t.title}${hasSubs?`<span class="parent-tag">${t.subs.length} ย่อย</span>`:''}</div><div class="t-owner">${t.owner||''}${t.note?` · <em>${t.note}</em>`:''}</div></td>
+      <td><span class="badge ${SYS_BD[t.system]||''}">${t.system}</span></td>
+      <td><span class="cat-b">${t.category}</span></td>
+      <td style="font-size:11px;white-space:nowrap">${fmtDate(t.due)}</td>
+      <td>${progCell}</td>
+      <td><select class="st-sel" onchange="changeStatus(${t.id},this.value)">${Object.entries(ST_LBL).map(([v,l])=>`<option value="${v}"${t.status===v?' selected':''}>${l}</option>`).join('')}</select></td>
+      <td>${daysPill(t)}</td>
+      <td style="white-space:nowrap">
+        <button class="icon-btn edit" onclick="openModal(${t.id})">✏</button>
+        <button class="icon-btn" onclick="deleteTask(${t.id})">✕</button>
+        <button class="add-sub-btn" onclick="openSubModal(${t.id})">+ ย่อย</button>
+      </td>
+    </tr>`;
+    if(hasSubs&&isExp){
+      t.subs.forEach(s=>{
+        rows+=`<tr class="sub-row ${s.status==='done'?'done-row':''}">
+          <td></td>
+          <td><div class="sub-title">↳ ${s.title}</div><div class="t-owner">${s.owner||t.owner||''}${s.note?` · <em>${s.note}</em>`:''}</div></td>
+          <td></td><td></td>
+          <td style="font-size:11px;white-space:nowrap">${fmtDate(s.due)}</td>
+          <td></td>
+          <td><select class="st-sel" onchange="changeSubStatus(${t.id},${s.id},this.value)">${Object.entries(ST_LBL).map(([v,l])=>`<option value="${v}"${s.status===v?' selected':''}>${l}</option>`).join('')}</select></td>
+          <td>${daysPill(s,true)}</td>
+          <td style="white-space:nowrap">
+            <button class="icon-btn edit" onclick="openSubModal(${t.id},${s.id})">✏</button>
+            <button class="icon-btn" onclick="deleteSubTask(${t.id},${s.id})">✕</button>
+          </td>
+        </tr>`;
+      });
+      rows+=`<tr class="sub-row"><td></td><td colspan="8"><button class="add-sub-btn" onclick="openSubModal(${t.id})">+ เพิ่มงานย่อย</button></td></tr>`;
+    }
+  });
+  document.getElementById('task-tbody').innerHTML=rows||'<tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--text-m)">ไม่พบรายการ</td></tr>';
+  document.getElementById('task-count').textContent=`แสดง ${filtered.length} จาก ${tasks.length} งานหลัก`;
+}
+
+function toggleExpand(id){expanded[id]=!expanded[id];renderTasks();}
+
+// ── STATUS CHANGE ─────────────────────────────────────────
+async function changeStatus(id,val){
+  setSyncDot('loading');
+  try{
+    await sbPatch(`tasks?id=eq.${id}`,{status:val});
+    const t=tasks.find(x=>x.id===id);
+    if(t)t.status=val;
+    setSyncDot('ok');
+    refresh();
+  }catch(e){setSyncDot('err');alert('บันทึกไม่สำเร็จ กรุณาลองใหม่');}
+}
+
+async function changeSubStatus(pid,sid,val){
+  setSyncDot('loading');
+  try{
+    await sbPatch(`tasks?id=eq.${sid}`,{status:val});
+    const parent=tasks.find(x=>x.id===pid);
+    if(parent){
+      const s=parent.subs.find(x=>x.id===sid);
+      if(s)s.status=val;
+      let newParentStatus=parent.status;
+      if(parent.subs.every(x=>x.status==='done'))newParentStatus='done';
+      else if(parent.subs.some(x=>x.status==='done'||x.status==='in_progress'))newParentStatus='in_progress';
+      if(newParentStatus!==parent.status){
+        await sbPatch(`tasks?id=eq.${pid}`,{status:newParentStatus});
+        parent.status=newParentStatus;
+      }
+    }
+    setSyncDot('ok');
+    refresh();
+  }catch(e){setSyncDot('err');alert('บันทึกไม่สำเร็จ');}
+}
+
+// ── MAIN MODAL ────────────────────────────────────────────
+function openModal(id=null){
+  editingId=id;
+  const t=id?tasks.find(x=>x.id===id):null;
+  document.getElementById('m-title-lbl').textContent=id?'แก้ไขงาน':'เพิ่มงานใหม่';
+  document.getElementById('m-title').value=t?.title||'';
+  document.getElementById('m-sys').value=t?.system||'HACCP';
+  document.getElementById('m-cat').value=t?.category||'ทบทวนเอกสาร';
+  document.getElementById('m-due').value=t?.due||new Date(Date.now()+30*86400000).toISOString().split('T')[0];
+  document.getElementById('m-status').value=t?.status||'pending';
+  document.getElementById('m-owner').value=t?.owner||'';
+  document.getElementById('m-note').value=t?.note||'';
+  document.getElementById('modal').classList.add('open');
+  setTimeout(()=>document.getElementById('m-title').focus(),100);
+}
+function closeModal(){document.getElementById('modal').classList.remove('open');editingId=null;}
+
+async function saveTask(){
+  const title=document.getElementById('m-title').value.trim();
+  if(!title){alert('กรุณากรอกชื่องาน');return;}
+  const due=document.getElementById('m-due').value;
+  if(!due){alert('กรุณาเลือกวันกำหนดเสร็จ');return;}
+  const data={title,system:document.getElementById('m-sys').value,category:document.getElementById('m-cat').value,due,status:document.getElementById('m-status').value,owner:document.getElementById('m-owner').value.trim(),note:document.getElementById('m-note').value.trim()};
+  setSyncDot('loading');
+  try{
+    if(editingId){
+      await sbPatch(`tasks?id=eq.${editingId}`,data);
+    }else{
+      data.sort_order=tasks.length+1;
+      await sbPost('tasks',data);
+    }
+    closeModal();
+    await loadTasks();
+    refresh();
+  }catch(e){setSyncDot('err');alert('บันทึกไม่สำเร็จ: '+e.message);}
+}
+
+async function deleteTask(id){
+  const t=tasks.find(x=>x.id===id);
+  if(!t||!confirm(`ลบงาน "${t.title}"?`))return;
+  setSyncDot('loading');
+  try{
+    await sbDelete(`tasks?id=eq.${id}`);
+    await loadTasks();
+    refresh();
+  }catch(e){setSyncDot('err');alert('ลบไม่สำเร็จ');}
+}
+
+// ── SUB MODAL ─────────────────────────────────────────────
+function openSubModal(pid,sid=null){
+  const parent=tasks.find(x=>x.id===pid);if(!parent)return;
+  editingSubParent=pid;editingSubId=sid;
+  const sub=sid?parent.subs.find(x=>x.id===sid):null;
+  document.getElementById('sm-title-lbl').textContent=sid?'แก้ไขงานย่อย':'เพิ่มงานย่อย';
+  document.getElementById('sm-parent-name').textContent='งานหลัก: '+parent.title;
+  document.getElementById('sm-parent-id').value=pid;
+  document.getElementById('sm-id').value=sid||'';
+  document.getElementById('sm-title').value=sub?.title||'';
+  document.getElementById('sm-due').value=sub?.due||parent.due||'';
+  document.getElementById('sm-status').value=sub?.status||'pending';
+  document.getElementById('sm-owner').value=sub?.owner||'';
+  document.getElementById('sm-note').value=sub?.note||'';
+  document.getElementById('sub-modal').classList.add('open');
+  expanded[pid]=true;
+  setTimeout(()=>document.getElementById('sm-title').focus(),100);
+}
+function closeSubModal(){document.getElementById('sub-modal').classList.remove('open');}
+
+async function saveSubTask(){
+  const title=document.getElementById('sm-title').value.trim();
+  if(!title){alert('กรุณากรอกชื่องานย่อย');return;}
+  const pid=editingSubParent;
+  const parent=tasks.find(x=>x.id===pid);if(!parent)return;
+  const data={title,parent_id:pid,system:parent.system,category:parent.category,due:document.getElementById('sm-due').value||null,status:document.getElementById('sm-status').value,owner:document.getElementById('sm-owner').value.trim(),note:document.getElementById('sm-note').value.trim(),sort_order:0};
+  setSyncDot('loading');
+  try{
+    if(editingSubId){
+      await sbPatch(`tasks?id=eq.${editingSubId}`,{title:data.title,due:data.due,status:data.status,owner:data.owner,note:data.note});
+    }else{
+      await sbPost('tasks',data);
+    }
+    closeSubModal();
+    await loadTasks();
+    refresh();
+  }catch(e){setSyncDot('err');alert('บันทึกไม่สำเร็จ: '+e.message);}
+}
+
+async function deleteSubTask(pid,sid){
+  const parent=tasks.find(x=>x.id===pid);
+  const s=parent?.subs.find(x=>x.id===sid);
+  if(!s||!confirm(`ลบงานย่อย "${s.title}"?`))return;
+  setSyncDot('loading');
+  try{
+    await sbDelete(`tasks?id=eq.${sid}`);
+    await loadTasks();
+    refresh();
+  }catch(e){setSyncDot('err');alert('ลบไม่สำเร็จ');}
+}
+
+// ── GANTT ─────────────────────────────────────────────────
+const MONTHS_TH=['ต.ค.68','พ.ย.68','ธ.ค.68','ม.ค.69','ก.พ.69','มี.ค.69','เม.ย.69','พ.ค.69','มิ.ย.69','ก.ค.69','ส.ค.69','ก.ย.69'];
+const Y_START=new Date(2025,9,1),Y_END=new Date(2026,9,30);
+const TOTAL_D=Math.round((Y_END-Y_START)/86400000);
+function pct(d){return Math.max(0,Math.min(100,Math.round((new Date(d)-Y_START)/86400000/TOTAL_D*100)));}
+function renderGantt(){
+  const gs=document.getElementById('g-sys').value;
+  const list=tasks.filter(t=>!gs||t.system===gs);
+  const LW=200,todayP=pct(new Date());
+  let h=`<div style="display:grid;grid-template-columns:${LW}px 1fr;border-bottom:1px solid var(--bd)">
+    <div style="padding:8px 10px;font-size:11px;font-weight:600;color:var(--text-m);border-right:1px solid var(--bd)">งาน</div>
+    <div style="display:flex">${MONTHS_TH.map(m=>`<div style="flex:1;text-align:center;font-size:10px;font-weight:600;color:var(--text-m);padding:8px 2px;border-right:1px solid var(--bd-lt)">${m}</div>`).join('')}</div>
+  </div>`;
+  list.forEach(t=>{
+    if(!t.due)return;
+    const dp=pct(t.due);const bL=Math.max(0,dp-4);const bW=Math.min(6,100-bL);
+    const col=t.status==='done'?'#3B6D11':t.status==='in_progress'?'#185FA5':SYS_COL[t.system]||'#888';
+    h+=`<div style="display:grid;grid-template-columns:${LW}px 1fr;border-bottom:1px solid var(--bd-lt);min-height:34px;align-items:center">
+      <div style="padding:5px 10px;font-size:11px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-right:1px solid var(--bd)" title="${t.title}">${t.title}</div>
+      <div style="position:relative;display:flex;height:34px">
+        ${MONTHS_TH.map(()=>`<div style="flex:1;border-right:1px solid var(--bd-lt)"></div>`).join('')}
+        <div style="position:absolute;top:7px;left:${bL}%;width:${bW}%;height:20px;background:${col};border-radius:3px;display:flex;align-items:center;padding:0 4px;font-size:9px;color:#fff;font-weight:600;overflow:hidden">${fmtDate(t.due)}</div>
+        <div style="position:absolute;top:0;bottom:0;left:${todayP}%;width:2px;background:#E24B4A;opacity:.6;pointer-events:none"></div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('gantt-wrap').innerHTML=h;
+}
+
+// ── PAGES ─────────────────────────────────────────────────
+function showPage(p,btn){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(p==='dashboard')renderDashboard();
+  else if(p==='tasks')renderTasks();
+  else if(p==='gantt')renderGantt();
+}
+function refresh(){renderDashboard();renderTasks();}
+
+// ── INIT ──────────────────────────────────────────────────
+seedIfEmpty();
+</script>
+</body>
+</html>
