@@ -701,7 +701,7 @@ function showPage(p,btn){
 function refresh(){renderDashboard();renderTasks();}
 
 // ── INIT ──────────────────────────────────────────────────
-seedIfEmpty();
+seedIfEmpty().then(()=>renderDashboard());
 </script>
 </body>
 </html>
