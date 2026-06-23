@@ -22,112 +22,175 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--text);font-size:14px}
-nav{background:var(--sur);border-bottom:1px solid var(--bd);padding:0 20px;display:flex;align-items:center;gap:12px;height:52px;position:sticky;top:0;z-index:100}
-.brand{font-size:14px;font-weight:600;color:var(--blue-dk);white-space:nowrap}
-.brand span{font-weight:400;color:var(--text-m);font-size:12px}
+
+/* NAV */
+nav{background:var(--sur);border-bottom:1px solid var(--bd);padding:0 20px;display:flex;align-items:center;gap:10px;height:52px;position:sticky;top:0;z-index:100;flex-wrap:wrap}
+.brand{font-size:13px;font-weight:600;color:var(--blue-dk);white-space:nowrap}
+.brand span{font-weight:400;color:var(--text-m);font-size:11px}
 .tabs{display:flex;gap:2px;margin-left:auto}
 .tab{padding:6px 12px;border-radius:var(--r);font-size:13px;cursor:pointer;border:none;background:none;color:var(--text-m)}
 .tab.active{background:var(--blue-lt);color:var(--blue-dk);font-weight:500}
 .tab:hover:not(.active){background:var(--gray-lt)}
-.sync-dot{width:8px;height:8px;border-radius:50%;background:#aaa;margin-left:8px;flex-shrink:0;transition:background .3s}
-.sync-dot.ok{background:#3ecf8e}
-.sync-dot.err{background:#e24b4a}
-.sync-dot.loading{background:#f59e0b;animation:pulse .8s infinite}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:#aaa;flex-shrink:0;transition:background .3s}
+.sync-dot.ok{background:#3ecf8e}.sync-dot.err{background:#e24b4a}.sync-dot.loading{background:#f59e0b;animation:pulse .8s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.page{display:none;padding:16px 20px;max-width:1200px;margin:0 auto}
+
+/* PAGES */
+.page{display:none;padding:14px 18px;max-width:1200px;margin:0 auto}
 .page.active{display:block}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:16px}
-.stat{background:var(--sur);border:1px solid var(--bd);border-radius:var(--rl);padding:12px 14px}
-.stat-n{font-size:24px;font-weight:600;line-height:1;margin-bottom:3px}
+
+/* ── DASHBOARD ────────────────────────────── */
+.db-date{font-size:12px;color:var(--text-m);background:var(--sur);border:1px solid var(--bd);border-radius:var(--r);display:inline-flex;align-items:center;gap:6px;padding:5px 12px;margin-bottom:12px}
+.db-date strong{color:var(--text);font-weight:600}
+.db-month-note{font-size:11px;color:var(--text-m);margin-left:8px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:14px}
+.stat{background:var(--sur);border:1px solid var(--bd);border-radius:var(--rl);padding:11px 13px}
+.stat-n{font-size:24px;font-weight:600;line-height:1;margin-bottom:2px}
 .stat-l{font-size:11px;color:var(--text-m)}
-.stat.danger .stat-n{color:var(--red-txt)}
-.stat.warn .stat-n{color:var(--amber-dk)}
-.stat.ok .stat-n{color:var(--green-dk)}
-.stat.info .stat-n{color:var(--blue-dk)}
-.alerts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
-.alert{border-radius:var(--r);padding:9px 13px;font-size:12px;display:flex;gap:8px}
+.stat.danger .stat-n{color:var(--red-txt)}.stat.warn .stat-n{color:var(--amber-dk)}.stat.ok .stat-n{color:var(--green-dk)}.stat.info .stat-n{color:var(--blue-dk)}
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:14px}
+.dash-card{background:var(--sur);border:1px solid var(--bd);border-radius:var(--rl);padding:13px 15px}
+.dash-card h3{font-size:11px;font-weight:600;color:var(--text-m);margin-bottom:10px;display:flex;align-items:center;gap:5px}
+.pi{margin-bottom:8px}
+.pi-lbl{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px}
+.pi-bar{height:5px;background:var(--bd);border-radius:3px;overflow:hidden}
+.pi-fill{height:100%;border-radius:3px}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.cat-item{background:var(--gray-lt);border-radius:var(--r);padding:8px 10px;display:flex;align-items:center;gap:7px}
+.cat-icon{font-size:15px;color:var(--text-m)}
+.cat-name{font-size:10px;color:var(--text-m);margin-bottom:1px}
+.cat-frac{font-size:14px;font-weight:600}
+
+/* action list */
+.action-section-lbl{font-size:10px;font-weight:600;padding:5px 0 4px;border-bottom:1px solid;margin-bottom:2px;display:flex;align-items:center;gap:4px}
+.action-section-lbl.red{color:var(--red-txt);border-color:var(--red-bd)}
+.action-section-lbl.amber{color:var(--amber-dk);border-color:var(--warn-bd);margin-top:8px}
+.up-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd-lt)}
+.up-item:last-child{border-bottom:none}
+.up-left{flex:1;min-width:0}
+.up-name{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}
+.up-tags{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.up-owner{font-size:10px;color:var(--text-m)}
+.up-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0}
+.up-due-txt{font-size:10px;color:var(--text-m);white-space:nowrap}
+
+/* alerts */
+.alerts{display:flex;flex-direction:column;gap:7px;margin-bottom:12px}
+.alert{border-radius:var(--r);padding:8px 12px;font-size:12px}
 .alert.red{background:var(--red-bg);border:1px solid var(--red-bd);color:var(--red-txt)}
 .alert.yellow{background:var(--warn-bg);border:1px solid var(--warn-bd);color:var(--warn-txt)}
 .alert strong{font-weight:600;display:block;margin-bottom:2px}
 .alert ul{margin:0;padding-left:14px}
-.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
-.toolbar select,.toolbar input{font-size:13px;padding:6px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sur);color:var(--text);outline:none}
-.toolbar input{width:180px}
-.btn{font-size:13px;padding:6px 12px;border-radius:var(--r);cursor:pointer;border:1px solid var(--bd);background:var(--sur);color:var(--text);white-space:nowrap}
-.btn:hover{background:var(--gray-lt)}
-.btn.primary{background:var(--blue-dk);color:#fff;border-color:var(--blue-dk)}
-.btn.primary:hover{background:var(--blue)}
-.ml{margin-left:auto}
+
+/* ── PLAN PAGE ────────────────────────────── */
+.sys-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.stab{padding:6px 14px;border-radius:20px;font-size:12px;cursor:pointer;border:1px solid var(--bd);background:var(--sur);color:var(--text-m);font-weight:400;transition:all .15s}
+.stab-haccp.active{background:var(--blue-lt);color:var(--blue-dk);border-color:#B5D4F4}
+.stab-iso14.active{background:var(--green-lt);color:var(--green-dk);border-color:#C0DD97}
+.stab-iso45.active{background:var(--coral-lt);color:var(--coral-dk);border-color:#F5C4B3}
+.stab-wsp.active{background:var(--purple-lt);color:var(--purple-dk);border-color:#CECBF6}
+.stab-iso22.active{background:var(--pink-lt);color:var(--pink-dk);border-color:#F4C0D1}
+.sys-header{background:var(--sur);border:1px solid var(--bd);border-radius:var(--rl);padding:11px 14px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.sys-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.sys-title{font-size:14px;font-weight:600;flex:1}
+.sys-bar-wrap{width:100px;height:5px;background:var(--bd);border-radius:3px;overflow:hidden}
+.sys-bar{height:100%;border-radius:3px}
+.sections{display:flex;flex-direction:column;gap:8px}
+.section{background:var(--sur);border:1px solid var(--bd);border-radius:var(--rl);overflow:hidden}
+.sec-hd{display:flex;align-items:center;gap:9px;padding:10px 14px;cursor:pointer;user-select:none}
+.sec-hd:hover{background:var(--gray-lt)}
+.sec-name{font-size:13px;font-weight:500;flex:1}
+.sec-meta{font-size:11px;color:var(--text-m);white-space:nowrap}
+.mini-bar{width:55px;height:4px;background:var(--bd);border-radius:2px;overflow:hidden;display:inline-block}
+.mini-fill{height:100%;border-radius:2px}
+.chevron{font-size:13px;color:var(--text-m);transition:transform .2s;flex-shrink:0}
+.chevron.open{transform:rotate(90deg)}
+.sec-body{border-top:1px solid var(--bd-lt)}
+.item-row{display:grid;grid-template-columns:22px 1fr auto auto;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid var(--bd-lt)}
+.item-row:last-child{border-bottom:none}
+.item-row:hover{background:#fafafa}
+.item-num{font-size:10px;color:var(--text-h);text-align:right}
+.item-name{font-size:12px;line-height:1.4;font-weight:500}
+.item-sub{font-size:10px;color:var(--text-m);margin-top:1px}
+.item-due{font-size:10px;color:var(--text-m);white-space:nowrap;text-align:right;min-width:55px}
+.chk-wrap input{width:15px;height:15px;accent-color:var(--blue);cursor:pointer}
+.add-row{padding:7px 14px;border-top:1px dashed var(--bd);display:flex;align-items:center;gap:5px;color:var(--text-m);font-size:11px;cursor:pointer}
+.add-row:hover{color:var(--blue);background:var(--blue-lt)}
+
+/* ── GANTT ────────────────────────────────── */
+.gantt-sys-tabs{display:flex;gap:6px;margin-bottom:10px;align-items:center;flex-wrap:wrap}
+.gantt-wrap{background:var(--sur);border:1px solid var(--bd);border-radius:var(--rl);overflow:hidden;overflow-x:auto}
+
+/* ── DOCS PAGE ────────────────────────────── */
+.doc-toolbar{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.search-box{display:flex;align-items:center;gap:7px;flex:1;background:var(--sur);border:1px solid var(--bd);border-radius:var(--r);padding:0 11px;height:34px}
+.search-box input{border:none;background:none;font-size:13px;color:var(--text);outline:none;flex:1;font-family:inherit}
+.search-box input::placeholder{color:var(--text-h)}
+.filter-btn{display:flex;align-items:center;gap:5px;padding:0 11px;height:34px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sur);color:var(--text-m);font-size:12px;cursor:pointer;white-space:nowrap}
+.filter-btn.active{background:var(--blue-lt);color:var(--blue-dk);border-color:#B5D4F4}
+.filter-count{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--blue-dk);color:#fff;font-size:9px;font-weight:600}
+.filter-panel{background:var(--gray-lt);border-radius:var(--r);border:1px solid var(--bd);padding:12px;display:none;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+.filter-panel.open{display:grid}
+.chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;min-height:4px}
+.chip{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:20px;font-size:11px;background:var(--blue-lt);color:var(--blue-dk);border:1px solid #B5D4F4;cursor:pointer}
+.chip:hover{background:#d0e8f9}
+.doc-prog{background:var(--sur);border:1px solid var(--bd);border-radius:var(--rl);padding:11px 14px;margin-bottom:10px}
+.doc-prog h3{font-size:11px;font-weight:600;color:var(--text-m);margin-bottom:8px}
 .tbl-wrap{background:var(--sur);border:1px solid var(--bd);border-radius:var(--rl);overflow:hidden;overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:650px}
-th{padding:9px 11px;text-align:left;font-size:11px;font-weight:600;color:var(--text-m);background:var(--gray-lt);border-bottom:1px solid var(--bd);white-space:nowrap}
-td{padding:9px 11px;border-bottom:1px solid var(--bd-lt);vertical-align:middle}
+table{width:100%;border-collapse:collapse;min-width:600px;table-layout:fixed}
+th{padding:8px 10px;text-align:left;font-size:11px;font-weight:600;color:var(--text-m);background:var(--gray-lt);border-bottom:1px solid var(--bd);white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid var(--bd-lt);vertical-align:middle}
 tr:last-child td{border-bottom:none}
-tr.done-row td{opacity:.45}
-tr:hover:not(.sub-row) td{background:#fafafa}
-tr.sub-row td{background:#fdfcfb;padding-top:5px;padding-bottom:5px}
-tr.sub-row:hover td{background:#f7f6f4}
-tr.sub-row td:first-child{padding-left:36px}
+tr:hover td{background:#fafafa}
+.doc-name{font-size:12px;font-weight:500}
+.doc-code{font-size:10px;color:var(--text-m);margin-top:1px}
+
+/* SHARED COMPONENTS */
 .badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:20px;font-weight:500;white-space:nowrap}
 .b-haccp{background:var(--blue-lt);color:var(--blue-dk)}
 .b-iso14{background:var(--green-lt);color:var(--green-dk)}
 .b-iso45{background:var(--coral-lt);color:var(--coral-dk)}
 .b-wsp{background:var(--purple-lt);color:var(--purple-dk)}
 .b-iso22{background:var(--pink-lt);color:var(--pink-dk)}
-.cat-b{background:var(--gray-lt);color:var(--gray-dk);display:inline-block;font-size:10px;padding:2px 7px;border-radius:20px;white-space:nowrap}
-.parent-tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:var(--amber-lt);color:var(--amber-dk);font-weight:500;margin-left:4px}
-.st-sel{font-size:11px;padding:3px 6px;border-radius:var(--r);border:1px solid var(--bd);background:var(--sur);cursor:pointer;max-width:120px}
-.dp{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.b-cat{background:var(--gray-lt);color:var(--gray-dk)}
+.freq{display:inline-block;font-size:10px;padding:2px 6px;border-radius:var(--r);background:var(--gray-lt);color:var(--text-m)}
+.dp{display:inline-block;font-size:10px;padding:2px 7px;border-radius:20px;font-weight:500;white-space:nowrap}
 .dp.over{background:var(--red-bg);color:var(--red-txt)}
 .dp.w15{background:var(--red-bg);color:var(--red-txt)}
 .dp.w30{background:var(--warn-bg);color:var(--warn-txt)}
 .dp.ok{background:var(--ok-bg);color:var(--ok-txt)}
 .dp.done{background:var(--ok-bg);color:var(--ok-txt)}
-.dp.na{background:var(--gray-lt);color:var(--gray-md);font-weight:400}
-.dp.should{background:#FBEAF0;color:#72243E}
-.prog-wrap{display:flex;align-items:center;gap:6px;min-width:100px}
-.prog-bar{flex:1;height:5px;background:var(--bd);border-radius:3px;overflow:hidden;min-width:50px}
-.prog-fill{height:100%;border-radius:3px;transition:width .3s}
-.prog-pct{font-size:11px;font-weight:600;min-width:28px;text-align:right}
-.expand-btn{background:none;border:none;cursor:pointer;font-size:12px;padding:2px 5px;border-radius:4px;color:var(--text-m);line-height:1;transition:transform .2s}
-.expand-btn.open{transform:rotate(90deg)}
-.add-sub-btn{background:none;border:1px dashed var(--bd);color:var(--text-m);font-size:11px;padding:2px 8px;border-radius:var(--r);cursor:pointer}
-.add-sub-btn:hover{border-color:var(--blue);color:var(--blue)}
-.icon-btn{background:none;border:none;cursor:pointer;font-size:14px;padding:2px 5px;border-radius:4px;color:var(--text-h)}
-.icon-btn:hover{color:var(--red-txt);background:var(--red-bg)}
-.icon-btn.edit:hover{color:var(--blue-dk);background:var(--blue-lt)}
-.t-title{font-weight:500;font-size:13px;line-height:1.3}
-.t-owner{font-size:11px;color:var(--text-m);margin-top:1px}
-.sub-title{font-size:12px;color:var(--text);line-height:1.3}
+.dp.pend{background:var(--gray-lt);color:var(--gray-md)}
+.dp.month{background:var(--warn-bg);color:var(--amber-dk)}
+.fg label{display:block;font-size:11px;font-weight:600;color:var(--text-m);margin-bottom:4px}
+.fg select{width:100%;padding:6px 8px;border:1px solid var(--bd);border-radius:var(--r);font-size:12px;font-family:inherit;background:var(--sur)}
+.btn{font-size:12px;padding:5px 12px;border-radius:var(--r);cursor:pointer;border:1px solid var(--bd);background:var(--sur);color:var(--text)}
+.btn:hover{background:var(--gray-lt)}
+.btn.primary{background:var(--blue-dk);color:#fff;border-color:var(--blue-dk)}
+.btn.primary:hover{background:var(--blue)}
+.btn.sm{padding:4px 10px;font-size:11px}
+.loading-screen{display:flex;align-items:center;justify-content:center;height:160px;flex-direction:column;gap:10px;color:var(--text-m);font-size:13px}
+.spinner{width:22px;height:22px;border:2px solid var(--bd);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* MODAL */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:center;justify-content:center;padding:16px}
 .overlay.open{display:flex}
-.modal{background:var(--sur);border-radius:var(--rl);width:100%;max-width:480px;max-height:90vh;overflow-y:auto}
-.mh{padding:14px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--sur)}
+.modal{background:var(--sur);border-radius:var(--rl);width:100%;max-width:460px;max-height:90vh;overflow-y:auto}
+.mh{padding:13px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--sur)}
 .mh h3{font-size:14px;font-weight:600}
-.mc{padding:16px 18px;display:flex;flex-direction:column;gap:12px}
-.mf{padding:12px 18px;border-top:1px solid var(--bd);display:flex;gap:8px;justify-content:flex-end}
-.fg label{display:block;font-size:11px;font-weight:600;color:var(--text-m);margin-bottom:4px}
-.fg input,.fg select,.fg textarea{width:100%;padding:7px 9px;border:1px solid var(--bd);border-radius:var(--r);font-size:13px;font-family:inherit;outline:none}
+.mc{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.mf{padding:10px 16px;border-top:1px solid var(--bd);display:flex;gap:8px;justify-content:flex-end}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fg input,.fg textarea{width:100%;padding:6px 8px;border:1px solid var(--bd);border-radius:var(--r);font-size:13px;font-family:inherit;outline:none}
 .fg input:focus,.fg select:focus{border-color:var(--blue)}
-.fg2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .close-btn{background:none;border:none;font-size:18px;cursor:pointer;color:var(--text-m);line-height:1}
-.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:16px}
-.dash-card{background:var(--sur);border:1px solid var(--bd);border-radius:var(--rl);padding:14px 16px}
-.dash-card h3{font-size:12px;font-weight:600;color:var(--text-m);margin-bottom:10px}
-.pi{margin-bottom:8px}
-.pi-lbl{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px}
-.pi-bar{height:5px;background:var(--bd);border-radius:3px;overflow:hidden}
-.pi-fill{height:100%;border-radius:3px}
-.up-item{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid var(--bd-lt);align-items:flex-start}
-.up-item:last-child{border-bottom:none}
-.up-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
-.loading-screen{display:flex;align-items:center;justify-content:center;height:200px;flex-direction:column;gap:12px;color:var(--text-m);font-size:13px}
-.spinner{width:24px;height:24px;border:2px solid var(--bd);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
+
 @media(max-width:600px){
-  nav{padding:0 12px}.brand span{display:none}
-  .page{padding:10px 12px}.stats{grid-template-columns:repeat(2,1fr)}
-  .toolbar input{width:100%}.fg2{grid-template-columns:1fr}
+  nav{padding:0 12px}.page{padding:10px 12px}
+  .dash-grid{grid-template-columns:1fr}.two-col{grid-template-columns:1fr}
+  .fg2{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}
+  .filter-panel{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -137,222 +200,270 @@ tr.sub-row td:first-child{padding-left:36px}
   <div class="brand">QSHE Tracker <span>โรงงานผลิตน้ำมหาสวัสดิ์ ปี 2569</span></div>
   <div class="tabs">
     <button class="tab active" onclick="showPage('dashboard',this)">ภาพรวม</button>
-    <button class="tab" onclick="showPage('tasks',this)">รายการงาน</button>
+    <button class="tab" onclick="showPage('plan',this)">แผนงาน</button>
     <button class="tab" onclick="showPage('gantt',this)">ไทม์ไลน์</button>
+    <button class="tab" onclick="showPage('docs',this)">เอกสาร</button>
   </div>
   <div class="sync-dot" id="sync-dot" title="สถานะการเชื่อมต่อ"></div>
 </nav>
 
+<!-- ═══════════════ DASHBOARD ═══════════════ -->
 <div class="page active" id="page-dashboard">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap">
+    <div class="db-date" id="db-date-lbl"></div>
+    <div class="db-month-note" id="db-month-note"></div>
+  </div>
   <div class="stats" id="db-stats"></div>
-  <div class="alerts" id="db-alerts"></div>
-  <div class="dash-grid">
-    <div class="dash-card"><h3>ความคืบหน้าแต่ละระบบ</h3><div id="db-prog"></div></div>
-    <div class="dash-card"><h3>งานที่ใกล้ครบกำหนด (30 วัน)</h3><div id="db-up"></div></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:12px">
+    <div class="dash-card"><h3>📊 ความคืบหน้าแต่ละระบบ</h3><div id="db-prog"></div></div>
+    <div class="dash-card"><h3>🗂 แยกตามหมวดกิจกรรม</h3><div class="cat-grid" id="db-cats"></div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px">
+    <div class="dash-card"><h3>🔔 แจ้งเตือน</h3><div id="db-alerts"></div></div>
+    <div class="dash-card">
+      <h3 id="db-action-title">📋 สิ่งที่ต้องดำเนินการ</h3>
+      <div id="db-action"></div>
+    </div>
   </div>
 </div>
 
-<div class="page" id="page-tasks">
-  <div class="alerts" id="tk-alerts"></div>
-  <div class="toolbar">
-    <input type="text" id="s-search" placeholder="ค้นหา..." oninput="renderTasks()">
-    <select id="s-sys" onchange="renderTasks()">
+<!-- ═══════════════ PLAN ═══════════════════ -->
+<div class="page" id="page-plan">
+  <div class="sys-tabs" id="plan-sys-tabs"></div>
+  <div class="sys-header" id="plan-sys-header"></div>
+  <div class="sections" id="plan-sections"></div>
+</div>
+
+<!-- ═══════════════ GANTT ══════════════════ -->
+<div class="page" id="page-gantt">
+  <div class="gantt-sys-tabs">
+    <select id="g-sys" onchange="renderGantt()" style="font-size:13px;padding:5px 9px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sur)">
       <option value="">ทุกระบบ</option>
-      <option>HACCP</option><option>ISO14001</option><option>ISO45001</option>
-      <option>WSP</option><option>ISO22301</option>
+      <option>HACCP</option><option>ISO14001</option><option>ISO45001</option><option>WSP</option><option>ISO22301</option>
     </select>
-    <select id="s-cat" onchange="renderTasks()">
-      <option value="">ทุกประเภท</option>
-      <option>ทบทวนเอกสาร</option><option>ตรวจประเมิน</option><option>ฝึกอบรม</option>
-      <option>ซ้อมแผน</option><option>ทบทวนผู้บริหาร</option><option>รายงานกฎหมาย</option><option>ตรวจสอบ/วัด</option>
-    </select>
-    <select id="s-st" onchange="renderTasks()">
-      <option value="">ทุกสถานะ</option>
-      <option value="pending">รอดำเนินการ</option>
-      <option value="in_progress">กำลังดำเนินการ</option>
-      <option value="done">เสร็จแล้ว</option>
-    </select>
-    <button class="btn primary ml" onclick="openModal()">+ เพิ่มงาน</button>
+    <span style="font-size:11px;color:var(--text-m)">เส้นแดง = วันนี้</span>
+  </div>
+  <div class="gantt-wrap" id="gantt-wrap"></div>
+</div>
+
+<!-- ═══════════════ DOCS ════════════════════ -->
+<div class="page" id="page-docs">
+  <div class="doc-toolbar">
+    <div class="search-box">
+      <span style="color:var(--text-m);font-size:14px">🔍</span>
+      <input type="text" id="doc-search" placeholder="ค้นหาชื่อเอกสาร รหัส หรือผู้รับผิดชอบ..." oninput="renderDocs()">
+    </div>
+    <button class="filter-btn" id="doc-filter-btn" onclick="toggleDocFilter()">
+      ⚙ กรอง <span class="filter-count" id="doc-filter-count" style="display:none">0</span>
+    </button>
+    <button class="btn primary" onclick="openDocModal()">+ เพิ่มเอกสาร</button>
+  </div>
+  <div class="chips" id="doc-chips"></div>
+  <div class="filter-panel" id="doc-filter-panel">
+    <div class="fg"><label>ระบบ</label>
+      <select id="df-sys" onchange="applyDocFilter()">
+        <option value="">ทุกระบบ</option>
+        <option>HACCP</option><option>ISO14001</option><option>ISO45001</option><option>WSP</option><option>ISO22301</option>
+      </select>
+    </div>
+    <div class="fg"><label>ความถี่</label>
+      <select id="df-freq" onchange="applyDocFilter()">
+        <option value="">ทุกความถี่</option><option>รายเดือน</option><option>รายปี</option>
+      </select>
+    </div>
+    <div class="fg"><label>สถานะ</label>
+      <select id="df-st" onchange="applyDocFilter()">
+        <option value="">ทุกสถานะ</option><option value="done">ทบทวนแล้ว</option><option value="pending">ยังไม่ทบทวน</option><option value="over">เกินกำหนด</option>
+      </select>
+    </div>
+    <div style="grid-column:1/-1;display:flex;justify-content:flex-end;gap:7px;border-top:1px solid var(--bd);padding-top:8px;margin-top:2px">
+      <button class="btn sm" onclick="clearDocFilter()">ล้างทั้งหมด</button>
+    </div>
+  </div>
+  <div class="doc-prog">
+    <h3>ความคืบหน้าการทบทวนเอกสารแต่ละระบบ</h3>
+    <div id="doc-prog-bars"></div>
   </div>
   <div class="tbl-wrap">
     <table>
       <thead><tr>
-        <th style="width:3%"></th>
-        <th style="width:30%">งาน / ผู้รับผิดชอบ</th>
-        <th>ระบบ</th><th>ประเภท</th><th>เริ่ม</th><th>กำหนดเสร็จ</th>
-        <th>ความคืบหน้า</th><th>สถานะ</th><th>คงเหลือ</th><th></th>
+        <th style="width:32%">ชื่อเอกสาร</th>
+        <th style="width:11%">ระบบ</th>
+        <th style="width:9%">ความถี่</th>
+        <th style="width:11%">ทบทวนล่าสุด</th>
+        <th style="width:11%">ครบกำหนด</th>
+        <th style="width:11%">ผู้รับผิดชอบ</th>
+        <th style="width:9%">คงเหลือ</th>
+        <th style="width:6%">ทบทวนแล้ว</th>
       </tr></thead>
-      <tbody id="task-tbody"><tr><td colspan="9"><div class="loading-screen"><div class="spinner"></div>กำลังโหลดข้อมูล...</div></td></tr></tbody>
+      <tbody id="doc-tbody"><tr><td colspan="8"><div class="loading-screen"><div class="spinner"></div>กำลังโหลด...</div></td></tr></tbody>
     </table>
   </div>
-  <div id="task-count" style="font-size:11px;color:var(--text-m);margin-top:8px;text-align:right"></div>
+  <div id="doc-count" style="font-size:11px;color:var(--text-m);margin-top:7px;text-align:right"></div>
 </div>
 
-<div class="page" id="page-gantt">
-  <div style="margin-bottom:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-    <select id="g-sys" onchange="renderGantt()" style="font-size:13px;padding:6px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sur)">
-      <option value="">ทุกระบบ</option>
-      <option>HACCP</option><option>ISO14001</option><option>ISO45001</option>
-      <option>WSP</option><option>ISO22301</option>
-    </select>
-    <span style="font-size:11px;color:var(--text-m)">เส้นแดง = วันนี้</span>
-  </div>
-  <div style="background:var(--sur);border:1px solid var(--bd);border-radius:var(--rl);overflow:hidden;overflow-x:auto" id="gantt-wrap"></div>
-</div>
-
-<!-- MODAL งานหลัก -->
-<div class="overlay" id="modal">
+<!-- MODAL งานย่อย/item -->
+<div class="overlay" id="item-modal">
   <div class="modal">
-    <div class="mh"><h3 id="m-title-lbl">เพิ่มงาน</h3><button class="close-btn" onclick="closeModal()">×</button></div>
+    <div class="mh"><h3 id="im-title-lbl">เพิ่มรายการ</h3><button class="close-btn" onclick="closeItemModal()">×</button></div>
     <div class="mc">
-      <input type="hidden" id="m-id">
-      <div class="fg"><label>ชื่องาน *</label><input type="text" id="m-title" placeholder="ชื่องาน"></div>
+      <input type="hidden" id="im-sec-key">
+      <input type="hidden" id="im-idx">
+      <div style="font-size:12px;color:var(--text-m);background:var(--gray-lt);border-radius:var(--r);padding:6px 10px" id="im-sec-name"></div>
+      <div class="fg"><label>ชื่อรายการ *</label><input type="text" id="im-name" placeholder="ชื่อรายการ"></div>
       <div class="fg2">
-        <div class="fg"><label>ระบบ *</label>
-          <select id="m-sys"><option value="HACCP">HACCP</option><option value="ISO14001">ISO 14001</option><option value="ISO45001">ISO 45001</option><option value="WSP">WSP</option><option value="ISO22301">ISO 22301</option></select>
-        </div>
-        <div class="fg"><label>ประเภท *</label>
-          <select id="m-cat"><option>ทบทวนเอกสาร</option><option>ตรวจประเมิน</option><option>ฝึกอบรม</option><option>ซ้อมแผน</option><option>ทบทวนผู้บริหาร</option><option>รายงานกฎหมาย</option><option>ตรวจสอบ/วัด</option></select>
-        </div>
-      </div>
-      <div class="fg2">
-        <div class="fg"><label>วันที่เริ่ม</label><input type="date" id="m-plan-start"></div>
-      <div class="fg"><label>วันกำหนดเสร็จ *</label><input type="date" id="m-due"></div>
+        <div class="fg"><label>กำหนดเสร็จ</label><input type="date" id="im-due"></div>
         <div class="fg"><label>สถานะ</label>
-          <select id="m-status"><option value="pending">รอดำเนินการ</option><option value="in_progress">กำลังดำเนินการ</option><option value="done">เสร็จแล้ว</option></select>
+          <select id="im-status"><option value="pending">รอดำเนินการ</option><option value="in_progress">กำลังดำเนินการ</option><option value="done">เสร็จแล้ว</option></select>
         </div>
       </div>
-      <div class="fg"><label>ผู้รับผิดชอบ</label><input type="text" id="m-owner" placeholder="เช่น สบค.ฝผม."></div>
-      <div class="fg"><label>หมายเหตุ</label><textarea id="m-note" rows="2" style="resize:vertical"></textarea></div>
+      <div class="fg"><label>ผู้รับผิดชอบ</label><input type="text" id="im-owner" placeholder="ผู้รับผิดชอบ"></div>
+      <div class="fg"><label>หมายเหตุ</label><input type="text" id="im-note" placeholder="เช่น online / on-site"></div>
     </div>
-    <div class="mf">
-      <button class="btn" onclick="closeModal()">ยกเลิก</button>
-      <button class="btn primary" onclick="saveTask()">บันทึก</button>
-    </div>
+    <div class="mf"><button class="btn" onclick="closeItemModal()">ยกเลิก</button><button class="btn primary" onclick="saveItem()">บันทึก</button></div>
   </div>
 </div>
 
-<!-- MODAL งานย่อย -->
-<div class="overlay" id="sub-modal">
+<!-- MODAL เอกสาร -->
+<div class="overlay" id="doc-modal">
   <div class="modal">
-    <div class="mh"><h3 id="sm-title-lbl">เพิ่มงานย่อย</h3><button class="close-btn" onclick="closeSubModal()">×</button></div>
+    <div class="mh"><h3 id="dm-title-lbl">เพิ่มเอกสาร</h3><button class="close-btn" onclick="closeDocModal()">×</button></div>
     <div class="mc">
-      <input type="hidden" id="sm-parent-id">
-      <input type="hidden" id="sm-id">
-      <div style="font-size:12px;color:var(--text-m);background:var(--gray-lt);border-radius:var(--r);padding:7px 10px" id="sm-parent-name"></div>
-      <div class="fg"><label>ชื่องานย่อย *</label><input type="text" id="sm-title" placeholder="ชื่องานย่อย"></div>
+      <input type="hidden" id="dm-id">
+      <div class="fg"><label>ชื่อเอกสาร *</label><input type="text" id="dm-name" placeholder="ชื่อเอกสาร"></div>
       <div class="fg2">
-        <div class="fg"><label>วันกำหนดเสร็จ</label><input type="date" id="sm-due"></div>
-        <div class="fg"><label>สถานะ</label>
-          <select id="sm-status"><option value="pending">รอดำเนินการ</option><option value="in_progress">กำลังดำเนินการ</option><option value="done">เสร็จแล้ว</option></select>
+        <div class="fg"><label>รหัสเอกสาร</label><input type="text" id="dm-code" placeholder="เช่น QP-001"></div>
+        <div class="fg"><label>ระบบ</label>
+          <select id="dm-sys"><option>HACCP</option><option>ISO14001</option><option>ISO45001</option><option>WSP</option><option>ISO22301</option></select>
         </div>
       </div>
-      <div class="fg"><label>ผู้รับผิดชอบ</label><input type="text" id="sm-owner" placeholder="ไม่ระบุ = ใช้ของงานหลัก"></div>
-      <div class="fg"><label>หมายเหตุ</label><input type="text" id="sm-note" placeholder="เช่น online / on-site"></div>
+      <div class="fg2">
+        <div class="fg"><label>ความถี่</label>
+          <select id="dm-freq"><option>รายปี</option><option>รายเดือน</option></select>
+        </div>
+        <div class="fg"><label>ผู้รับผิดชอบ</label><input type="text" id="dm-owner" placeholder="ผู้รับผิดชอบ"></div>
+      </div>
+      <div class="fg2">
+        <div class="fg"><label>ทบทวนล่าสุด</label><input type="date" id="dm-last"></div>
+        <div class="fg"><label>ครบกำหนดถัดไป</label><input type="date" id="dm-next"></div>
+      </div>
     </div>
-    <div class="mf">
-      <button class="btn" onclick="closeSubModal()">ยกเลิก</button>
-      <button class="btn primary" onclick="saveSubTask()">บันทึก</button>
-    </div>
+    <div class="mf"><button class="btn" onclick="closeDocModal()">ยกเลิก</button><button class="btn primary" onclick="saveDoc()">บันทึก</button></div>
   </div>
 </div>
 
 <script>
-// ── SUPABASE CONFIG ───────────────────────────────────────
-const SB_URL = 'https://cnspicpdyfwdzxsclhyu.supabase.co';
-const SB_KEY = 'sb_publishable_ZQ976WMLKZIG9yYMkobKKA_2NTJyuAi';
-const HEADERS = {'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY};
+// ── SUPABASE ───────────────────────────────
+const SB_URL='https://cnspicpdyfwdzxsclhyu.supabase.co';
+const SB_KEY='sb_publishable_ZQ976WMLKZIG9yYMkobKKA_2NTJyuAi';
+const H={'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY};
+async function sbGet(p){const r=await fetch(SB_URL+'/rest/v1/'+p,{headers:{...H,'Prefer':'return=representation'}});if(!r.ok)throw new Error(await r.text());return r.json();}
+async function sbPost(p,b){const r=await fetch(SB_URL+'/rest/v1/'+p,{method:'POST',headers:{...H,'Prefer':'return=representation'},body:JSON.stringify(b)});if(!r.ok)throw new Error(await r.text());return r.json();}
+async function sbPatch(p,b){const r=await fetch(SB_URL+'/rest/v1/'+p,{method:'PATCH',headers:{...H,'Prefer':'return=representation'},body:JSON.stringify(b)});if(!r.ok)throw new Error(await r.text());return r.json();}
+async function sbDelete(p){const r=await fetch(SB_URL+'/rest/v1/'+p,{method:'DELETE',headers:H});if(!r.ok)throw new Error(await r.text());}
 
-async function sbGet(path){
-  const r=await fetch(SB_URL+'/rest/v1/'+path,{headers:{...HEADERS,'Prefer':'return=representation'}});
-  if(!r.ok) throw new Error(await r.text());
-  return r.json();
+// ── STATE ──────────────────────────────────
+let tasks=[],docs=[],planSysIdx=0,secExpanded={},docFilterActive={};
+const SYS_LIST=['HACCP','ISO14001','ISO45001','WSP','ISO22301'];
+const SYS_NAME={HACCP:'HACCP / GHP',ISO14001:'ISO 14001',ISO45001:'ISO 45001',WSP:'WSP',ISO22301:'ISO 22301'};
+const SYS_COL={HACCP:'#185FA5',ISO14001:'#3B6D11',ISO45001:'#993C1D',WSP:'#534AB7',ISO22301:'#993556'};
+const SYS_CLS={HACCP:'b-haccp',ISO14001:'b-iso14',ISO45001:'b-iso45',WSP:'b-wsp',ISO22301:'b-iso22'};
+const SEC_DEF=[
+  {key:'doc',name:'ทบทวนเอกสาร',icon:'📄'},
+  {key:'audit',name:'ตรวจประเมิน',icon:'📋'},
+  {key:'train',name:'ฝึกอบรม',icon:'🎓'},
+  {key:'drill',name:'ซ้อมแผน',icon:'🚨'},
+  {key:'mgr',name:'ทบทวนผู้บริหาร',icon:'👥'},
+  {key:'legal',name:'รายงานกฎหมาย',icon:'📝'},
+  {key:'meas',name:'ตรวจสอบ/วัด',icon:'🔬'},
+];
+const CAT_ICON={doc:'📄',audit:'📋',train:'🎓',drill:'🚨',mgr:'👥',legal:'📝',meas:'🔬'};
+
+function setSyncDot(s){const d=document.getElementById('sync-dot');d.className='sync-dot '+s;}
+
+// ── DATE HELPERS ───────────────────────────
+const MONTHS_TH=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+const MONTHS_SHORT=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+const DAYS_TH=['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+function todayStr(){
+  const n=new Date();
+  const by=n.getFullYear()+543;
+  return`วัน${DAYS_TH[n.getDay()]}ที่ ${n.getDate()} ${MONTHS_TH[n.getMonth()]} ${by}`;
 }
-async function sbPost(path,body){
-  const r=await fetch(SB_URL+'/rest/v1/'+path,{method:'POST',headers:{...HEADERS,'Prefer':'return=representation'},body:JSON.stringify(body)});
-  if(!r.ok) throw new Error(await r.text());
-  return r.json();
-}
-async function sbPatch(path,body){
-  const r=await fetch(SB_URL+'/rest/v1/'+path,{method:'PATCH',headers:{...HEADERS,'Prefer':'return=representation'},body:JSON.stringify(body)});
-  if(!r.ok) throw new Error(await r.text());
-  return r.json();
-}
-async function sbDelete(path){
-  const r=await fetch(SB_URL+'/rest/v1/'+path,{method:'DELETE',headers:HEADERS});
-  if(!r.ok) throw new Error(await r.text());
+function fmtDate(s){if(!s)return'-';const d=new Date(s);return`${d.getDate()} ${MONTHS_SHORT[d.getMonth()]} ${d.getFullYear()+543-2500+2500}`;}
+function fmtDateShort(s){if(!s)return'-';const d=new Date(s);return`${d.getDate()} ${MONTHS_SHORT[d.getMonth()]} ${String(d.getFullYear()+543).slice(2)}`;}
+function dd(s){if(!s)return 9999;const d=new Date(s);d.setHours(0,0,0,0);const t=new Date();t.setHours(0,0,0,0);return Math.round((d-t)/86400000);}
+function currentMonthEnd(){const n=new Date();return new Date(n.getFullYear(),n.getMonth()+1,0);}
+function isThisMonth(s){if(!s)return false;const d=new Date(s);const n=new Date();return d.getFullYear()===n.getFullYear()&&d.getMonth()===n.getMonth();}
+
+function daysPill(due,status){
+  if(status==='done')return'<span class="dp done">✓ เสร็จ</span>';
+  if(!due)return'<span class="dp pend">—</span>';
+  const d=dd(due);
+  if(d<0)return`<span class="dp over">เกิน ${Math.abs(d)} วัน</span>`;
+  if(d<=15)return`<span class="dp w15">🔴 ${d} วัน</span>`;
+  if(d<=30)return`<span class="dp w30">🟡 ${d} วัน</span>`;
+  return`<span class="dp ok">${d} วัน</span>`;
 }
 
-// ── STATE ─────────────────────────────────────────────────
-let tasks=[], expanded={}, editingId=null, editingSubId=null, editingSubParent=null;
-
-function setSyncDot(state){
-  const d=document.getElementById('sync-dot');
-  d.className='sync-dot '+state;
-  d.title=state==='ok'?'เชื่อมต่อแล้ว':state==='err'?'เชื่อมต่อไม่ได้':'กำลังโหลด...';
-}
-
-// ── LOAD FROM SUPABASE ───────────────────────────────────
-async function loadTasks(){
+// ── LOAD ───────────────────────────────────
+async function loadAll(){
   setSyncDot('loading');
   try{
-    const rows = await sbGet('tasks?select=*&order=sort_order,id');
-    // จัดโครงสร้าง parent/child
-    const parents = rows.filter(r=>!r.parent_id);
-    parents.forEach(p=>{
-      p.subs = rows.filter(r=>r.parent_id===p.id);
-    });
-    tasks = parents;
+    const rows=await sbGet('tasks?select=*&order=sort_order,id');
+    const parents=rows.filter(r=>!r.parent_id);
+    parents.forEach(p=>{p.subs=rows.filter(r=>r.parent_id===p.id);});
+    tasks=parents;
+    try{docs=await sbGet('documents?select=*&order=id');}catch(e){docs=[];}
     setSyncDot('ok');
-  }catch(e){
-    setSyncDot('err');
-    console.error(e);
-  }
+  }catch(e){setSyncDot('err');console.error(e);}
 }
 
-// ── SEED DATA (ใส่ข้อมูลเริ่มต้น) ────────────────────────
 async function seedIfEmpty(){
   setSyncDot('loading');
   try{
-    const existing = await sbGet('tasks?select=id&limit=1');
-    if(existing.length>0){ await loadTasks(); return; }
-    // ข้อมูลเริ่มต้นจากเอกสารจริง
-    const seed = [
-      {title:'ทบทวนบันทึกข้อตกลง',system:'HACCP',category:'ทบทวนเอกสาร',due:'2025-11-30',status:'done',owner:'สบค.ฝผม.',note:'',sort_order:1},
-      {title:'ทบทวนเอกสารในระบบ GHP & HACCP',system:'HACCP',category:'ทบทวนเอกสาร',due:'2026-03-31',status:'done',owner:'สบค.ฝผม.',note:'',sort_order:2},
-      {title:'Internal Audit ระบบ HACCP',system:'HACCP',category:'ตรวจประเมิน',due:'2026-05-31',status:'done',owner:'คณะทำงาน',note:'',sort_order:3},
-      {title:'External Audit HACCP (Re-Certification)',system:'HACCP',category:'ตรวจประเมิน',due:'2026-08-31',status:'pending',owner:'คณะทำงาน',note:'Re-Certification',sort_order:4},
-      {title:'ประชุมทบทวนผู้บริหาร GHP & HACCP',system:'HACCP',category:'ทบทวนผู้บริหาร',due:'2026-09-30',status:'pending',owner:'คณะทำงาน',note:'',sort_order:5},
-      {title:'ทดสอบย้อนกลับของผลิตภัณฑ์',system:'HACCP',category:'ซ้อมแผน',due:'2026-06-30',status:'in_progress',owner:'กผจ.ฝผม. / สคน.4',note:'',sort_order:6},
-      {title:'ฝึกซ้อมเรียกคืนผลิตภัณฑ์',system:'HACCP',category:'ซ้อมแผน',due:'2026-07-31',status:'pending',owner:'กผจ.ฝผม. / สคน.4',note:'',sort_order:7},
-      {title:'อบรมตามระบบ GHP & HACCP',system:'HACCP',category:'ฝึกอบรม',due:'2026-07-31',status:'in_progress',owner:'ฝพบ.',note:'5 หลักสูตร',sort_order:8},
-      {title:'ทบทวนเอกสารในระบบ ISO 14001',system:'ISO14001',category:'ทบทวนเอกสาร',due:'2026-03-31',status:'done',owner:'สบค.ฝผม.',note:'',sort_order:9},
-      {title:'ทบทวนการประเมิน Environmental Aspects',system:'ISO14001',category:'ทบทวนเอกสาร',due:'2026-06-30',status:'in_progress',owner:'คณะทำงาน',note:'',sort_order:10},
-      {title:'Internal Audit ระบบ ISO 14001',system:'ISO14001',category:'ตรวจประเมิน',due:'2026-07-31',status:'pending',owner:'คณะทำงาน',note:'',sort_order:11},
-      {title:'External Audit ระบบ ISO 14001',system:'ISO14001',category:'ตรวจประเมิน',due:'2026-09-30',status:'pending',owner:'คณะทำงาน',note:'',sort_order:12},
-      {title:'ประชุมทบทวนผู้บริหาร ISO 14001',system:'ISO14001',category:'ทบทวนผู้บริหาร',due:'2026-09-30',status:'pending',owner:'คณะทำงาน',note:'',sort_order:13},
-      {title:'ซ้อมแผนสารคลอรีนรั่วไหล',system:'ISO14001',category:'ซ้อมแผน',due:'2026-05-31',status:'done',owner:'กผจ.ฝผม.',note:'',sort_order:14},
-      {title:'ซ้อมแผนสารเคมีอื่น',system:'ISO14001',category:'ซ้อมแผน',due:'2026-08-31',status:'pending',owner:'กบง./กผจ.ฝผม.',note:'',sort_order:15},
-      {title:'อบรมตามข้อกำหนดระบบ ISO 14001',system:'ISO14001',category:'ฝึกอบรม',due:'2026-06-30',status:'in_progress',owner:'ฝพบ.',note:'3 หลักสูตร',sort_order:16},
-      {title:'ตรวจสอบอุปกรณ์และระบบตามกฎหมาย',system:'ISO14001',category:'ตรวจสอบ/วัด',due:'2026-09-30',status:'pending',owner:'สบค.ฝผม.',note:'',sort_order:17},
-      {title:'ทบทวนเอกสารและประเมินความสอดคล้องตามกฎหมาย',system:'ISO45001',category:'ทบทวนเอกสาร',due:'2026-03-31',status:'done',owner:'สบค.ฝผม.',note:'',sort_order:18},
-      {title:'Internal Audit ระบบ ISO 45001',system:'ISO45001',category:'ตรวจประเมิน',due:'2026-07-31',status:'pending',owner:'คณะทำงาน',note:'',sort_order:19},
-      {title:'External Audit ISO 45001 (Surveillance #1)',system:'ISO45001',category:'ตรวจประเมิน',due:'2026-08-31',status:'pending',owner:'สบค.ฝผม.',note:'Surveillance #1',sort_order:20},
-      {title:'ประชุมทบทวนผู้บริหาร ISO 45001',system:'ISO45001',category:'ทบทวนผู้บริหาร',due:'2026-09-30',status:'pending',owner:'สบค.ฝผม.',note:'',sort_order:21},
-      {title:'ส่งรายงานกิจกรรมตามกฎหมาย OH&S',system:'ISO45001',category:'รายงานกฎหมาย',due:'2026-03-31',status:'done',owner:'สบร.2 / สบค.ฝผม.',note:'10 แบบฟอร์ม',sort_order:22},
-      {title:'ฝึกซ้อมแผนปฏิบัติการฉุกเฉิน',system:'ISO45001',category:'ซ้อมแผน',due:'2026-09-30',status:'in_progress',owner:'สบค.ฝผม.',note:'7 แผน',sort_order:23},
-      {title:'อบรมตามข้อกำหนด ISO 45001 / ตามกฎหมาย',system:'ISO45001',category:'ฝึกอบรม',due:'2026-09-30',status:'in_progress',owner:'ฝพบ.',note:'22 หลักสูตร',sort_order:24},
-      {title:'ตรวจวัดสภาพแวดล้อมการทำงาน',system:'ISO45001',category:'ตรวจสอบ/วัด',due:'2026-07-31',status:'pending',owner:'สบค.ฝผม.',note:'จัดจ้างผู้รับจ้าง',sort_order:25},
-      {title:'ตรวจสุขภาพพนักงานที่สัมผัสผลิตภัณฑ์',system:'ISO45001',category:'ตรวจสอบ/วัด',due:'2026-08-31',status:'pending',owner:'กปช.ผวก.',note:'',sort_order:26},
-      {title:'จัดกิจกรรม Safety Day',system:'ISO45001',category:'ฝึกอบรม',due:'2026-09-30',status:'pending',owner:'สบค.ฝผม.',note:'',sort_order:27},
-      {title:'ทบทวน WSP/HACCP 10 โมดูล',system:'WSP',category:'ทบทวนเอกสาร',due:'2026-11-30',status:'pending',owner:'คณะทำงาน',note:'',sort_order:28},
-      {title:'ทบทวนผลดำเนินงาน/สำรวจความเสี่ยง WSP',system:'WSP',category:'ทบทวนเอกสาร',due:'2026-11-30',status:'pending',owner:'คณะทำงาน',note:'',sort_order:29},
-      {title:'อบรมเชิงปฏิบัติการจัดทำเอกสาร ISO 22301',system:'ISO22301',category:'ฝึกอบรม',due:'2026-10-31',status:'pending',owner:'คณะทำงาน BCP',note:'',sort_order:30},
-      {title:'ฝึกซ้อมแผน BCM',system:'ISO22301',category:'ซ้อมแผน',due:'2026-08-31',status:'pending',owner:'คณะทำงาน BCP',note:'',sort_order:31},
-      {title:'Internal Audit ระบบ ISO 22301',system:'ISO22301',category:'ตรวจประเมิน',due:'2026-09-30',status:'pending',owner:'คณะทำงาน BCP',note:'',sort_order:32},
+    const ex=await sbGet('tasks?select=id&limit=1');
+    if(ex.length>0){await loadAll();return;}
+    const seed=[
+      // HACCP
+      {title:'ทบทวนบันทึกข้อตกลง',system:'HACCP',category:'doc',due:'2025-11-30',status:'done',owner:'สบค.ฝผม.',note:'',sort_order:1},
+      {title:'ทบทวนเอกสารในระบบ GHP & HACCP',system:'HACCP',category:'doc',due:'2026-03-31',status:'done',owner:'สบค.ฝผม.',note:'',sort_order:2},
+      {title:'Internal Audit ระบบ HACCP',system:'HACCP',category:'audit',due:'2026-05-31',status:'done',owner:'คณะทำงาน',note:'',sort_order:3},
+      {title:'External Audit HACCP (Re-Certification)',system:'HACCP',category:'audit',due:'2026-08-31',status:'pending',owner:'คณะทำงาน',note:'Re-Certification',sort_order:4},
+      {title:'ประชุมทบทวนผู้บริหาร GHP & HACCP',system:'HACCP',category:'mgr',due:'2026-09-30',status:'pending',owner:'คณะทำงาน',note:'',sort_order:5},
+      {title:'ทดสอบย้อนกลับของผลิตภัณฑ์',system:'HACCP',category:'drill',due:'2026-06-30',status:'in_progress',owner:'กผจ.ฝผม. / สคน.4',note:'',sort_order:6},
+      {title:'ฝึกซ้อมเรียกคืนผลิตภัณฑ์',system:'HACCP',category:'drill',due:'2026-07-31',status:'pending',owner:'กผจ.ฝผม. / สคน.4',note:'',sort_order:7},
+      {title:'อบรมตามระบบ GHP & HACCP',system:'HACCP',category:'train',due:'2026-07-31',status:'in_progress',owner:'ฝพบ.',note:'5 หลักสูตร',sort_order:8},
+      // ISO14001
+      {title:'ทบทวนเอกสารในระบบ ISO 14001',system:'ISO14001',category:'doc',due:'2026-03-31',status:'done',owner:'สบค.ฝผม.',note:'',sort_order:9},
+      {title:'ทบทวนการประเมิน Environmental Aspects',system:'ISO14001',category:'doc',due:'2026-06-30',status:'in_progress',owner:'คณะทำงาน',note:'',sort_order:10},
+      {title:'Internal Audit ระบบ ISO 14001',system:'ISO14001',category:'audit',due:'2026-07-31',status:'pending',owner:'คณะทำงาน',note:'',sort_order:11},
+      {title:'External Audit ระบบ ISO 14001',system:'ISO14001',category:'audit',due:'2026-09-30',status:'pending',owner:'คณะทำงาน',note:'Re-Certification',sort_order:12},
+      {title:'ประชุมทบทวนผู้บริหาร ISO 14001',system:'ISO14001',category:'mgr',due:'2026-09-30',status:'pending',owner:'คณะทำงาน',note:'',sort_order:13},
+      {title:'ซ้อมแผนสารคลอรีนรั่วไหล',system:'ISO14001',category:'drill',due:'2026-05-31',status:'done',owner:'กผจ.ฝผม.',note:'',sort_order:14},
+      {title:'ซ้อมแผนสารเคมีอื่น',system:'ISO14001',category:'drill',due:'2026-08-31',status:'pending',owner:'กบง./กผจ.ฝผม.',note:'',sort_order:15},
+      {title:'อบรมตามข้อกำหนดระบบ ISO 14001',system:'ISO14001',category:'train',due:'2026-06-30',status:'in_progress',owner:'ฝพบ.',note:'3 หลักสูตร',sort_order:16},
+      {title:'ตรวจสอบอุปกรณ์และระบบตามกฎหมาย',system:'ISO14001',category:'meas',due:'2026-09-30',status:'pending',owner:'สบค.ฝผม.',note:'',sort_order:17},
+      // ISO45001
+      {title:'ทบทวนเอกสารและประเมินความสอดคล้องตามกฎหมาย',system:'ISO45001',category:'doc',due:'2026-03-31',status:'done',owner:'สบค.ฝผม.',note:'',sort_order:18},
+      {title:'Internal Audit ระบบ ISO 45001',system:'ISO45001',category:'audit',due:'2026-07-31',status:'pending',owner:'คณะทำงาน',note:'',sort_order:19},
+      {title:'External Audit ISO 45001 (Surveillance #1)',system:'ISO45001',category:'audit',due:'2026-08-31',status:'pending',owner:'สบค.ฝผม.',note:'Surveillance #1',sort_order:20},
+      {title:'ประชุมทบทวนผู้บริหาร ISO 45001',system:'ISO45001',category:'mgr',due:'2026-09-30',status:'pending',owner:'สบค.ฝผม.',note:'',sort_order:21},
+      {title:'ส่งรายงานกิจกรรมตามกฎหมาย OH&S',system:'ISO45001',category:'legal',due:'2026-03-31',status:'done',owner:'สบร.2 / สบค.ฝผม.',note:'10 แบบฟอร์ม',sort_order:22},
+      {title:'ฝึกซ้อมแผนปฏิบัติการฉุกเฉิน',system:'ISO45001',category:'drill',due:'2026-09-30',status:'in_progress',owner:'สบค.ฝผม.',note:'7 แผน',sort_order:23},
+      {title:'อบรมตามข้อกำหนด ISO 45001 / ตามกฎหมาย',system:'ISO45001',category:'train',due:'2026-09-30',status:'in_progress',owner:'ฝพบ.',note:'22 หลักสูตร',sort_order:24},
+      {title:'ตรวจวัดสภาพแวดล้อมการทำงาน',system:'ISO45001',category:'meas',due:'2026-07-31',status:'pending',owner:'สบค.ฝผม.',note:'จัดจ้างผู้รับจ้าง',sort_order:25},
+      {title:'ตรวจสุขภาพพนักงานที่สัมผัสผลิตภัณฑ์',system:'ISO45001',category:'meas',due:'2026-08-31',status:'pending',owner:'กปช.ผวก.',note:'',sort_order:26},
+      {title:'จัดกิจกรรม Safety Day',system:'ISO45001',category:'train',due:'2026-09-30',status:'pending',owner:'สบค.ฝผม.',note:'',sort_order:27},
+      // WSP
+      {title:'ทบทวน WSP/HACCP 10 โมดูล',system:'WSP',category:'doc',due:'2026-11-30',status:'pending',owner:'คณะทำงาน',note:'',sort_order:28},
+      {title:'ทบทวนผลดำเนินงาน/สำรวจความเสี่ยง WSP',system:'WSP',category:'doc',due:'2026-11-30',status:'pending',owner:'คณะทำงาน',note:'',sort_order:29},
+      // ISO22301
+      {title:'อบรมเชิงปฏิบัติการจัดทำเอกสาร ISO 22301',system:'ISO22301',category:'train',due:'2026-10-31',status:'pending',owner:'คณะทำงาน BCP',note:'',sort_order:30},
+      {title:'ฝึกซ้อมแผน BCM',system:'ISO22301',category:'drill',due:'2026-08-31',status:'pending',owner:'คณะทำงาน BCP',note:'',sort_order:31},
+      {title:'Internal Audit ระบบ ISO 22301',system:'ISO22301',category:'audit',due:'2026-09-30',status:'pending',owner:'คณะทำงาน BCP',note:'',sort_order:32},
     ];
-    // insert ทีละตัว เพื่อเก็บ id
-    const subDef = {
+    const subDef={
       8:[
         {title:'ทบทวนข้อกำหนดระบบ GHP & HACCP',due:'2026-02-28',status:'done',owner:'ฝพบ.',note:'online'},
         {title:'เทคนิค Internal Audit HACCP',due:'2026-04-30',status:'done',owner:'ฝพบ.',note:'online'},
@@ -371,337 +482,433 @@ async function seedIfEmpty(){
       ],
     };
     for(let i=0;i<seed.length;i++){
-      const inserted = await sbPost('tasks',seed[i]);
-      const newId = inserted[0].id;
-      const sortKey = seed[i].sort_order;
-      if(subDef[sortKey]){
-        for(const s of subDef[sortKey]){
-          await sbPost('tasks',{...s,parent_id:newId,system:seed[i].system,category:seed[i].category,sort_order:0});
-        }
+      const ins=await sbPost('tasks',seed[i]);
+      const nid=ins[0].id;
+      const so=seed[i].sort_order;
+      if(subDef[so]){
+        for(const s of subDef[so])
+          await sbPost('tasks',{...s,parent_id:nid,system:seed[i].system,category:seed[i].category,sort_order:0});
       }
     }
-    await loadTasks();
-  }catch(e){
-    setSyncDot('err');
-    console.error('seed error',e);
-  }
+    await loadAll();
+  }catch(e){setSyncDot('err');console.error('seed error',e);}
 }
 
-// ── HELPERS ───────────────────────────────────────────────
-function dd(due){if(!due)return 9999;const d=new Date(due);d.setHours(0,0,0,0);const t=new Date();t.setHours(0,0,0,0);return Math.round((d-t)/86400000);}
-function alertLv(task){
-  if(task.status==='done')return'done';
-  const d=dd(task.due);
-  if(d<0)return'over';
-  if(d<=15)return'w15';
-  if(d<=30)return'w30';
-  if(task.plan_start && dd(task.plan_start)<=0 && task.status==='pending')return'should';
-  return'ok';
-}
-function fmtDate(s){if(!s)return'-';return new Date(s).toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'2-digit'});}
-function subProg(task){
-  if(!task.subs||!task.subs.length)return null;
-  const done=task.subs.filter(s=>s.status==='done').length;
-  return{done,total:task.subs.length,pct:Math.round(done/task.subs.length*100)};
-}
-function daysPill(task,isSub=false){
-  if(task.status==='done')return'<span class="dp done">✓ เสร็จ</span>';
-  if(!task.due&&isSub)return'<span class="dp na">—</span>';
-  const d=dd(task.due);
-  if(d<0)return`<span class="dp over">⚠ เกิน ${Math.abs(d)} วัน</span>`;
-  if(d<=15)return`<span class="dp w15">🔴 ${d} วัน</span>`;
-  if(d<=30)return`<span class="dp w30">🟡 ${d} วัน</span>`;
-  if(task.plan_start && dd(task.plan_start)<=0 && task.status==='pending')return'<span class="dp should">🟠 เริ่มแล้ว</span>';
-  return`<span class="dp ok">${d} วัน</span>`;
-}
-const SYS_BD={HACCP:'b-haccp',ISO14001:'b-iso14',ISO45001:'b-iso45',WSP:'b-wsp',ISO22301:'b-iso22'};
-const SYS_COL={HACCP:'#185FA5',ISO14001:'#3B6D11',ISO45001:'#993C1D',WSP:'#534AB7',ISO22301:'#993556'};
-const ST_LBL={pending:'รอดำเนินการ',in_progress:'กำลังดำเนินการ',done:'เสร็จแล้ว'};
-
-function buildAlerts(){
-  const over=tasks.filter(t=>t.status!=='done'&&dd(t.due)<0);
-  const w15=tasks.filter(t=>t.status!=='done'&&dd(t.due)>=0&&dd(t.due)<=15);
-  const w30=tasks.filter(t=>t.status!=='done'&&dd(t.due)>15&&dd(t.due)<=30);
-  const should=tasks.filter(t=>t.status==='pending'&&t.plan_start&&dd(t.plan_start)<=0);
-  let h='';
-  if(over.length)h+=`<div class="alert red"><div><strong>⚠ เกินกำหนด ${over.length} งาน</strong><ul>${over.map(t=>`<li>${t.title}</li>`).join('')}</ul></div></div>`;
-  if(w15.length)h+=`<div class="alert red"><div><strong>🔴 แจ้งเตือน 15 วัน — ${w15.length} งาน</strong><ul>${w15.map(t=>`<li>${t.title} (เหลือ ${dd(t.due)} วัน)</li>`).join('')}</ul></div></div>`;
-  if(w30.length)h+=`<div class="alert yellow"><div><strong>🟡 แจ้งเตือน 30 วัน — ${w30.length} งาน</strong><ul>${w30.map(t=>`<li>${t.title} (เหลือ ${dd(t.due)} วัน)</li>`).join('')}</ul></div></div>`;
-  if(should.length)h+=`<div class="alert" style="background:#FBEAF0;border:1px solid #ED93B1;color:#72243E"><div><strong>🟠 เริ่มแล้ว — ${should.length} งาน (ยังไม่ได้เริ่ม)</strong><ul>${should.map(t=>`<li>${t.title}</li>`).join('')}</ul></div></div>`;
-  return h||'<div style="font-size:12px;color:var(--ok-txt);padding:4px 0">✓ ไม่มีงานที่ต้องแจ้งเตือน</div>';
-}
-
-// ── DASHBOARD ─────────────────────────────────────────────
+// ── DASHBOARD ──────────────────────────────
 function renderDashboard(){
+  // date
+  document.getElementById('db-date-lbl').innerHTML=`<strong>${todayStr()}</strong>`;
+  const mn=MONTHS_TH[new Date().getMonth()];
+  const by=new Date().getFullYear()+543;
+  document.getElementById('db-month-note').textContent=`แผนเดือนนี้: ${mn} ${by}`;
+
+  // flatten all items (parents + subs)
+  const allItems=[];
+  tasks.forEach(t=>{
+    if(t.subs&&t.subs.length) t.subs.forEach(s=>allItems.push({...s,_sys:t.system,_cat:t.category||s.category}));
+    else allItems.push({...t,_sys:t.system,_cat:t.category});
+  });
+
   const total=tasks.length;
   const done=tasks.filter(t=>t.status==='done').length;
   const over=tasks.filter(t=>t.status!=='done'&&dd(t.due)<0).length;
-  const w15=tasks.filter(t=>t.status!=='done'&&dd(t.due)>=0&&dd(t.due)<=15).length;
-  const w30=tasks.filter(t=>t.status!=='done'&&dd(t.due)>15&&dd(t.due)<=30).length;
-  const inp=tasks.filter(t=>t.status==='in_progress').length;
+
+  // แผนเดือนนี้ = due ในเดือนนี้ และยังไม่เสร็จ (รวมทั้ง parent และ sub)
+  const thisMonthItems=allItems.filter(x=>x.status!=='done'&&isThisMonth(x.due));
+  const thisMonthCount=thisMonthItems.length;
+
   document.getElementById('db-stats').innerHTML=`
-    <div class="stat"><div class="stat-n">${total}</div><div class="stat-l">งานทั้งหมด</div></div>
+    <div class="stat info"><div class="stat-n">${total}</div><div class="stat-l">งานหลักทั้งหมด</div></div>
     <div class="stat ok"><div class="stat-n">${done}</div><div class="stat-l">เสร็จแล้ว</div></div>
-    <div class="stat info"><div class="stat-n">${inp}</div><div class="stat-l">กำลังดำเนินการ</div></div>
-    <div class="stat warn"><div class="stat-n">${w30}</div><div class="stat-l">แจ้งเตือน 30 วัน</div></div>
-    <div class="stat danger"><div class="stat-n">${w15}</div><div class="stat-l">แจ้งเตือน 15 วัน</div></div>
-    <div class="stat danger"><div class="stat-n">${over}</div><div class="stat-l">เกินกำหนด</div></div>`;
-  document.getElementById('db-alerts').innerHTML=buildAlerts();
-  const sysList=['HACCP','ISO14001','ISO45001','WSP','ISO22301'];
-  const sysN={HACCP:'HACCP/GHP',ISO14001:'ISO 14001',ISO45001:'ISO 45001',WSP:'WSP',ISO22301:'ISO 22301'};
-  document.getElementById('db-prog').innerHTML=sysList.map(s=>{
-    const all=tasks.filter(t=>t.system===s);
+    <div class="stat warn"><div class="stat-n">${thisMonthCount}</div><div class="stat-l">แผนเดือนนี้</div></div>
+    <div class="stat danger"><div class="stat-n">${over}</div><div class="stat-l">เกินกำหนด / ค้าง</div></div>`;
+
+  // progress per system
+  document.getElementById('db-prog').innerHTML=SYS_LIST.map(s=>{
+    const st=tasks.filter(t=>t.system===s);
     let ti=0,di=0;
-    all.forEach(t=>{if(t.subs&&t.subs.length){ti+=t.subs.length;di+=t.subs.filter(x=>x.status==='done').length;}else{ti++;if(t.status==='done')di++;}});
+    st.forEach(t=>{
+      if(t.subs&&t.subs.length){ti+=t.subs.length;di+=t.subs.filter(x=>x.status==='done').length;}
+      else{ti++;if(t.status==='done')di++;}
+    });
     const pct=ti?Math.round(di/ti*100):0;
-    return`<div class="pi"><div class="pi-lbl"><span>${sysN[s]}</span><span>${di}/${ti} (${pct}%)</span></div><div class="pi-bar"><div class="pi-fill" style="width:${pct}%;background:${SYS_COL[s]}"></div></div></div>`;
+    return`<div class="pi"><div class="pi-lbl"><span>${SYS_NAME[s]}</span><span style="color:${SYS_COL[s]};font-weight:600">${di}/${ti} (${pct}%)</span></div><div class="pi-bar"><div class="pi-fill" style="width:${pct}%;background:${SYS_COL[s]}"></div></div></div>`;
   }).join('');
-  const up=tasks.filter(t=>t.status!=='done'&&dd(t.due)>=0&&dd(t.due)<=30).sort((a,b)=>new Date(a.due)-new Date(b.due)).slice(0,8);
-  document.getElementById('db-up').innerHTML=up.length?up.map(t=>{
-    const d=dd(t.due);const col=d<=15?'#E24B4A':'#BA7517';
-    const p=subProg(t);
-    return`<div class="up-item"><div class="up-dot" style="background:${col}"></div><div><div style="font-size:12px;font-weight:500">${t.title}</div><div style="font-size:11px;color:var(--text-m)">${t.system} · ${fmtDate(t.due)} · เหลือ ${d} วัน${p?` · ย่อย ${p.done}/${p.total}`:''}</div></div></div>`;
-  }).join(''):'<div style="font-size:12px;color:var(--text-m);padding:6px 0">ไม่มีงานใกล้ครบกำหนดใน 30 วัน</div>';
+
+  // cat breakdown
+  const catDef=[
+    {key:'doc',label:'ทบทวนเอกสาร',icon:'📄'},
+    {key:'audit',label:'ตรวจประเมิน',icon:'📋'},
+    {key:'train',label:'ฝึกอบรม',icon:'🎓'},
+    {key:'drill',label:'ซ้อมแผน',icon:'🚨'},
+    {key:'mgr',label:'ทบทวนผู้บริหาร',icon:'👥'},
+    {key:'meas',label:'ตรวจสอบ/วัด',icon:'🔬'},
+  ];
+  document.getElementById('db-cats').innerHTML=catDef.map(c=>{
+    const ci=allItems.filter(x=>x._cat===c.key||x.category===c.key);
+    const cd=ci.filter(x=>x.status==='done').length;
+    const ct=ci.length;
+    const col=cd===ct&&ct>0?'var(--green-dk)':cd===0?'var(--red-txt)':'var(--amber-dk)';
+    return`<div class="cat-item"><span class="cat-icon">${c.icon}</span><div><div class="cat-name">${c.label}</div><div class="cat-frac" style="color:${col}">${cd}<span style="font-size:10px;font-weight:400;color:var(--text-m)"> / ${ct}</span></div></div></div>`;
+  }).join('');
+
+  // alerts
+  const w15=tasks.filter(t=>t.status!=='done'&&dd(t.due)>=0&&dd(t.due)<=15);
+  const w30=tasks.filter(t=>t.status!=='done'&&dd(t.due)>15&&dd(t.due)<=30);
+  const overT=tasks.filter(t=>t.status!=='done'&&dd(t.due)<0);
+  let ah='';
+  if(overT.length) ah+=`<div class="alert red"><strong>⚠ เกินกำหนด ${overT.length} งาน</strong><ul>${overT.map(t=>`<li>${t.title} (${SYS_NAME[t.system]})</li>`).join('')}</ul></div>`;
+  if(w15.length) ah+=`<div class="alert red"><strong>🔴 ใกล้ครบกำหนดใน 15 วัน — ${w15.length} งาน</strong><ul>${w15.map(t=>`<li>${t.title} (เหลือ ${dd(t.due)} วัน · ${SYS_NAME[t.system]})</li>`).join('')}</ul></div>`;
+  if(w30.length) ah+=`<div class="alert yellow"><strong>🟡 แผนเดือนนี้ครบกำหนด — ${w30.length} งาน</strong><ul>${w30.map(t=>`<li>${t.title} (เหลือ ${dd(t.due)} วัน · ${SYS_NAME[t.system]})</li>`).join('')}</ul></div>`;
+  if(!ah) ah='<div style="font-size:12px;color:var(--ok-txt);padding:4px 0">✓ ไม่มีงานที่ต้องแจ้งเตือน</div>';
+  document.getElementById('db-alerts').innerHTML=ah;
+
+  // action list = งานค้าง/เกิน + แผนเดือนนี้ (ยังไม่เสร็จ)
+  const overItems=tasks.filter(t=>t.status!=='done'&&dd(t.due)<0).sort((a,b)=>dd(a.due)-dd(b.due));
+  const urgentItems=tasks.filter(t=>t.status!=='done'&&dd(t.due)>=0&&dd(t.due)<=15).sort((a,b)=>dd(a.due)-dd(b.due));
+  const monthItems=tasks.filter(t=>t.status!=='done'&&isThisMonth(t.due)&&dd(t.due)>15).sort((a,b)=>new Date(a.due)-new Date(b.due));
+
+  const totalAction=overItems.length+urgentItems.length+monthItems.length;
+  document.getElementById('db-action-title').textContent=`📋 สิ่งที่ต้องดำเนินการ (${totalAction} รายการ)`;
+
+  let ac='';
+  if(overItems.length||urgentItems.length){
+    ac+=`<div class="action-section-lbl red">⚠ งานค้าง / ใกล้เกินกำหนด</div>`;
+    [...overItems,...urgentItems].forEach(t=>{
+      ac+=`<div class="up-item">
+        <div class="up-left">
+          <div class="up-name">${t.title}</div>
+          <div class="up-tags">
+            <span class="badge ${SYS_CLS[t.system]}">${SYS_NAME[t.system]}</span>
+            <span class="up-owner">${t.owner||''}</span>
+          </div>
+        </div>
+        <div class="up-right">
+          <div class="up-due-txt">ครบ ${fmtDate(t.due)}</div>
+          ${daysPill(t.due,t.status)}
+        </div>
+      </div>`;
+    });
+  }
+  if(monthItems.length){
+    ac+=`<div class="action-section-lbl amber" style="margin-top:${overItems.length||urgentItems.length?8:0}px">📅 แผนเดือนนี้ (${MONTHS_TH[new Date().getMonth()]} ${new Date().getFullYear()+543})</div>`;
+    monthItems.forEach(t=>{
+      ac+=`<div class="up-item">
+        <div class="up-left">
+          <div class="up-name">${t.title}</div>
+          <div class="up-tags">
+            <span class="badge ${SYS_CLS[t.system]}">${SYS_NAME[t.system]}</span>
+            <span class="up-owner">${t.owner||''}</span>
+          </div>
+        </div>
+        <div class="up-right">
+          <div class="up-due-txt">ครบ ${fmtDate(t.due)}</div>
+          <span class="dp month">แผนเดือนนี้</span>
+        </div>
+      </div>`;
+    });
+  }
+  if(!ac) ac='<div style="font-size:12px;color:var(--ok-txt);padding:4px 0">✓ ไม่มีงานที่ต้องดำเนินการในเดือนนี้</div>';
+  document.getElementById('db-action').innerHTML=ac;
 }
 
-// ── TASKS TABLE ───────────────────────────────────────────
-function renderTasks(){
-  const search=document.getElementById('s-search').value.toLowerCase();
-  const fs=document.getElementById('s-sys').value;
-  const fc=document.getElementById('s-cat').value;
-  const fst=document.getElementById('s-st').value;
-  document.getElementById('tk-alerts').innerHTML=buildAlerts();
-  let filtered=tasks.filter(t=>{
-    if(search&&!t.title.toLowerCase().includes(search)&&!(t.owner||'').toLowerCase().includes(search))return false;
-    if(fs&&t.system!==fs)return false;
-    if(fc&&t.category!==fc)return false;
-    if(fst&&t.status!==fst)return false;
-    return true;
-  }).sort((a,b)=>{const o={over:0,w15:1,w30:2,ok:3,done:4};return(o[alertLv(a)]||3)-(o[alertLv(b)]||3)||new Date(a.due)-new Date(b.due);});
-  let rows='';
-  filtered.forEach(t=>{
-    const hasSubs=t.subs&&t.subs.length>0;
-    const isExp=!!expanded[t.id];
-    const p=hasSubs?subProg(t):null;
-    let progCell=p?`<div class="prog-wrap"><div class="prog-bar"><div class="prog-fill" style="width:${p.pct}%;background:${p.pct===100?'var(--green)':'var(--blue)'}"></div></div><span class="prog-pct" style="color:${p.pct===100?'var(--green-dk)':'var(--blue-dk)'}">${p.pct}%</span></div><div style="font-size:10px;color:var(--text-m);margin-top:2px">${p.done}/${p.total} งานย่อย</div>`:'<span style="font-size:11px;color:var(--text-h)">—</span>';
-    rows+=`<tr class="${t.status==='done'?'done-row':''}">
-      <td style="text-align:center">${hasSubs?`<button class="expand-btn ${isExp?'open':''}" onclick="toggleExpand(${t.id})">▶</button>`:''}</td>
-      <td><div class="t-title">${t.title}${hasSubs?`<span class="parent-tag">${t.subs.length} ย่อย</span>`:''}</div><div class="t-owner">${t.owner||''}${t.note?` · <em>${t.note}</em>`:''}</div></td>
-      <td><span class="badge ${SYS_BD[t.system]||''}">${t.system}</span></td>
-      <td><span class="cat-b">${t.category}</span></td>
-      <td style="font-size:11px;white-space:nowrap;color:${t.plan_start&&dd(t.plan_start)<=0&&t.status==='pending'?'var(--coral-dk)':'var(--text-m)'}">${t.plan_start?fmtDate(t.plan_start):'<span style=\'color:var(--text-h)\'>—</span>'}</td>
-      <td style="font-size:11px;white-space:nowrap">${fmtDate(t.due)}</td>
-      <td>${progCell}</td>
-      <td><select class="st-sel" onchange="changeStatus(${t.id},this.value)">${Object.entries(ST_LBL).map(([v,l])=>`<option value="${v}"${t.status===v?' selected':''}>${l}</option>`).join('')}</select></td>
-      <td>${daysPill(t)}</td>
-      <td style="white-space:nowrap">
-        <button class="icon-btn edit" onclick="openModal(${t.id})">✏</button>
-        <button class="icon-btn" onclick="deleteTask(${t.id})">✕</button>
-        <button class="add-sub-btn" onclick="openSubModal(${t.id})">+ ย่อย</button>
-      </td>
-    </tr>`;
-    if(hasSubs&&isExp){
-      t.subs.forEach(s=>{
-        rows+=`<tr class="sub-row ${s.status==='done'?'done-row':''}">
-          <td></td>
-          <td><div class="sub-title">↳ ${s.title}</div><div class="t-owner">${s.owner||t.owner||''}${s.note?` · <em>${s.note}</em>`:''}</div></td>
-          <td></td><td></td>
-          <td style="font-size:11px;white-space:nowrap">${fmtDate(s.due)}</td>
-          <td></td>
-          <td><select class="st-sel" onchange="changeSubStatus(${t.id},${s.id},this.value)">${Object.entries(ST_LBL).map(([v,l])=>`<option value="${v}"${s.status===v?' selected':''}>${l}</option>`).join('')}</select></td>
-          <td>${daysPill(s,true)}</td>
-          <td style="white-space:nowrap">
-            <button class="icon-btn edit" onclick="openSubModal(${t.id},${s.id})">✏</button>
-            <button class="icon-btn" onclick="deleteSubTask(${t.id},${s.id})">✕</button>
-          </td>
-        </tr>`;
+// ── PLAN PAGE ──────────────────────────────
+function renderPlanTabs(){
+  const el=document.getElementById('plan-sys-tabs');
+  el.innerHTML=SYS_LIST.map((s,i)=>`<button class="stab stab-${s.toLowerCase().replace(/\d/g,'')} ${i===planSysIdx?'active':''}" onclick="setPlanSys(${i})">${SYS_NAME[s]}</button>`).join('');
+}
+function setPlanSys(i){planSysIdx=i;renderPlan();}
+function renderPlan(){
+  renderPlanTabs();
+  const sys=SYS_LIST[planSysIdx];
+  const col=SYS_COL[sys];
+  const sysTasks=tasks.filter(t=>t.system===sys);
+  let ti=0,di=0;
+  sysTasks.forEach(t=>{if(t.subs&&t.subs.length){ti+=t.subs.length;di+=t.subs.filter(x=>x.status==='done').length;}else{ti++;if(t.status==='done')di++;}});
+  const pct=ti?Math.round(di/ti*100):0;
+  document.getElementById('plan-sys-header').innerHTML=`
+    <div class="sys-dot" style="background:${col}"></div>
+    <div class="sys-title">${SYS_NAME[sys]}</div>
+    <span style="font-size:12px;color:${col};font-weight:600">${pct}%</span>
+    <div class="sys-bar-wrap"><div class="sys-bar" style="width:${pct}%;background:${col}"></div></div>
+    <span style="font-size:12px;color:var(--text-m)">${di} / ${ti} งาน</span>`;
+
+  const secs=SEC_DEF.map(sec=>{
+    const items=sysTasks.filter(t=>t.category===sec.key);
+    // expand subs as items if any
+    const flatItems=[];
+    items.forEach(t=>{
+      if(t.subs&&t.subs.length) t.subs.forEach(s=>flatItems.push({...s,_pid:t.id,_ptitle:t.title}));
+      else flatItems.push(t);
+    });
+    return{...sec,items,flatItems};
+  }).filter(s=>s.items.length>0);
+
+  document.getElementById('plan-sections').innerHTML=secs.map(sec=>{
+    const tot=sec.flatItems.length;
+    const don=sec.flatItems.filter(x=>x.status==='done').length;
+    const pct2=tot?Math.round(don/tot*100):0;
+    const nearDue=sec.flatItems.filter(x=>x.status!=='done'&&dd(x.due)<=30&&dd(x.due)>=0);
+    const minDd=nearDue.length?Math.min(...nearDue.map(x=>dd(x.due))):null;
+    let pill='';
+    if(don===tot&&tot>0) pill='<span class="dp done">✓ ครบแล้ว</span>';
+    else if(minDd!==null&&minDd<=15) pill=`<span class="dp w15">🔴 ${minDd} วัน</span>`;
+    else if(minDd!==null&&minDd<=30) pill=`<span class="dp w30">🟡 ${minDd} วัน</span>`;
+    else pill=`<span class="dp pend">${don}/${tot}</span>`;
+    const isOpen=!!secExpanded[sys+'_'+sec.key];
+    let rows='';
+    if(isOpen){
+      sec.items.forEach((t,idx)=>{
+        if(t.subs&&t.subs.length){
+          // show parent as header row
+          rows+=`<div class="item-row" style="background:var(--gray-lt)">
+            <div class="item-num">${idx+1}</div>
+            <div><div class="item-name">${t.title}</div><div class="item-sub">${t.owner||''}${t.note?' · '+t.note:''} <span style="color:var(--blue-dk);font-size:10px">(${t.subs.length} งานย่อย)</span></div></div>
+            <div class="item-due">${fmtDateShort(t.due)}</div>
+            <div></div>
+          </div>`;
+          t.subs.forEach((s,si)=>{
+            rows+=`<div class="item-row" style="padding-left:30px">
+              <div class="item-num">${idx+1}.${si+1}</div>
+              <div><div class="item-name">${s.title}</div><div class="item-sub">${s.owner||t.owner||''}${s.note?' · '+s.note:''}</div></div>
+              <div class="item-due">${fmtDateShort(s.due)}</div>
+              <div class="chk-wrap"><input type="checkbox" ${s.status==='done'?'checked':''} onchange="toggleSubDone(${t.id},${s.id},this.checked)"></div>
+            </div>`;
+          });
+        } else {
+          rows+=`<div class="item-row">
+            <div class="item-num">${idx+1}</div>
+            <div><div class="item-name">${t.title}</div><div class="item-sub">${t.owner||''}${t.note?' · '+t.note:''}</div></div>
+            <div class="item-due">${fmtDateShort(t.due)}</div>
+            <div class="chk-wrap"><input type="checkbox" ${t.status==='done'?'checked':''} onchange="toggleDone(${t.id},this.checked)"></div>
+          </div>`;
+        }
       });
-      rows+=`<tr class="sub-row"><td></td><td colspan="8"><button class="add-sub-btn" onclick="openSubModal(${t.id})">+ เพิ่มงานย่อย</button></td></tr>`;
+      rows+=`<div class="add-row" onclick="openItemModal('${sys}','${sec.key}')">＋ เพิ่มรายการ</div>`;
     }
-  });
-  document.getElementById('task-tbody').innerHTML=rows||'<tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--text-m)">ไม่พบรายการ</td></tr>';
-  document.getElementById('task-count').textContent=`แสดง ${filtered.length} จาก ${tasks.length} งานหลัก`;
+    return`<div class="section">
+      <div class="sec-hd" onclick="toggleSec('${sys}_${sec.key}')">
+        <span style="font-size:16px">${sec.icon}</span>
+        <span class="sec-name">${sec.name}</span>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div class="mini-bar"><div class="mini-fill" style="width:${pct2}%;background:${col}"></div></div>
+          <span class="sec-meta">${don}/${tot} เสร็จ</span>
+        </div>
+        ${pill}
+        <span class="chevron ${isOpen?'open':''}">▶</span>
+      </div>
+      ${isOpen?`<div class="sec-body">${rows}</div>`:''}
+    </div>`;
+  }).join('');
 }
 
-function toggleExpand(id){expanded[id]=!expanded[id];renderTasks();}
-
-// ── STATUS CHANGE ─────────────────────────────────────────
-async function changeStatus(id,val){
+function toggleSec(k){secExpanded[k]=!secExpanded[k];renderPlan();}
+async function toggleDone(id,checked){
   setSyncDot('loading');
   try{
+    const val=checked?'done':'in_progress';
     await sbPatch(`tasks?id=eq.${id}`,{status:val});
-    const t=tasks.find(x=>x.id===id);
-    if(t)t.status=val;
-    setSyncDot('ok');
-    refresh();
-  }catch(e){setSyncDot('err');alert('บันทึกไม่สำเร็จ กรุณาลองใหม่');}
+    const t=tasks.find(x=>x.id===id);if(t)t.status=val;
+    setSyncDot('ok');refresh();
+  }catch(e){setSyncDot('err');}
 }
-
-async function changeSubStatus(pid,sid,val){
+async function toggleSubDone(pid,sid,checked){
   setSyncDot('loading');
   try{
+    const val=checked?'done':'in_progress';
     await sbPatch(`tasks?id=eq.${sid}`,{status:val});
-    const parent=tasks.find(x=>x.id===pid);
-    if(parent){
-      const s=parent.subs.find(x=>x.id===sid);
-      if(s)s.status=val;
-      let newParentStatus=parent.status;
-      if(parent.subs.every(x=>x.status==='done'))newParentStatus='done';
-      else if(parent.subs.some(x=>x.status==='done'||x.status==='in_progress'))newParentStatus='in_progress';
-      if(newParentStatus!==parent.status){
-        await sbPatch(`tasks?id=eq.${pid}`,{status:newParentStatus});
-        parent.status=newParentStatus;
-      }
+    const p=tasks.find(x=>x.id===pid);
+    if(p){const s=p.subs.find(x=>x.id===sid);if(s)s.status=val;
+      const np=p.subs.every(x=>x.status==='done')?'done':p.subs.some(x=>x.status==='done'||x.status==='in_progress')?'in_progress':'pending';
+      if(np!==p.status){await sbPatch(`tasks?id=eq.${pid}`,{status:np});p.status=np;}
     }
-    setSyncDot('ok');
-    refresh();
-  }catch(e){setSyncDot('err');alert('บันทึกไม่สำเร็จ');}
+    setSyncDot('ok');refresh();
+  }catch(e){setSyncDot('err');}
 }
 
-// ── MAIN MODAL ────────────────────────────────────────────
-function openModal(id=null){
-  editingId=id;
-  const t=id?tasks.find(x=>x.id===id):null;
-  document.getElementById('m-title-lbl').textContent=id?'แก้ไขงาน':'เพิ่มงานใหม่';
-  document.getElementById('m-title').value=t?.title||'';
-  document.getElementById('m-sys').value=t?.system||'HACCP';
-  document.getElementById('m-cat').value=t?.category||'ทบทวนเอกสาร';
-  document.getElementById('m-plan-start').value=t?.plan_start||'';
-  document.getElementById('m-due').value=t?.due||new Date(Date.now()+30*86400000).toISOString().split('T')[0];
-  document.getElementById('m-status').value=t?.status||'pending';
-  document.getElementById('m-owner').value=t?.owner||'';
-  document.getElementById('m-note').value=t?.note||'';
-  document.getElementById('modal').classList.add('open');
-  setTimeout(()=>document.getElementById('m-title').focus(),100);
+// ── ITEM MODAL ─────────────────────────────
+let editItemSys='',editItemCat='',editItemId=null;
+function openItemModal(sys,cat){
+  editItemSys=sys;editItemCat=cat;editItemId=null;
+  const sec=SEC_DEF.find(s=>s.key===cat);
+  document.getElementById('im-title-lbl').textContent='เพิ่มรายการ';
+  document.getElementById('im-sec-name').textContent=`${SYS_NAME[sys]} › ${sec?sec.name:cat}`;
+  document.getElementById('im-name').value='';
+  document.getElementById('im-due').value='';
+  document.getElementById('im-status').value='pending';
+  document.getElementById('im-owner').value='';
+  document.getElementById('im-note').value='';
+  document.getElementById('item-modal').classList.add('open');
+  setTimeout(()=>document.getElementById('im-name').focus(),100);
 }
-function closeModal(){document.getElementById('modal').classList.remove('open');editingId=null;}
-
-async function saveTask(){
-  const title=document.getElementById('m-title').value.trim();
-  if(!title){alert('กรุณากรอกชื่องาน');return;}
-  const due=document.getElementById('m-due').value;
-  if(!due){alert('กรุณาเลือกวันกำหนดเสร็จ');return;}
-  const ps=document.getElementById('m-plan-start').value;
-  const data={title,system:document.getElementById('m-sys').value,category:document.getElementById('m-cat').value,plan_start:ps||null,due,status:document.getElementById('m-status').value,owner:document.getElementById('m-owner').value.trim(),note:document.getElementById('m-note').value.trim()};
+function closeItemModal(){document.getElementById('item-modal').classList.remove('open');}
+async function saveItem(){
+  const title=document.getElementById('im-name').value.trim();
+  if(!title){alert('กรุณากรอกชื่อรายการ');return;}
+  const data={title,system:editItemSys,category:editItemCat,due:document.getElementById('im-due').value||null,status:document.getElementById('im-status').value,owner:document.getElementById('im-owner').value.trim(),note:document.getElementById('im-note').value.trim(),sort_order:tasks.length+1};
   setSyncDot('loading');
   try{
-    if(editingId){
-      await sbPatch(`tasks?id=eq.${editingId}`,data);
-    }else{
-      data.sort_order=tasks.length+1;
-      await sbPost('tasks',data);
-    }
-    closeModal();
-    await loadTasks();
-    refresh();
+    await sbPost('tasks',data);
+    closeItemModal();await loadAll();refresh();
   }catch(e){setSyncDot('err');alert('บันทึกไม่สำเร็จ: '+e.message);}
 }
 
-async function deleteTask(id){
-  const t=tasks.find(x=>x.id===id);
-  if(!t||!confirm(`ลบงาน "${t.title}"?`))return;
-  setSyncDot('loading');
-  try{
-    await sbDelete(`tasks?id=eq.${id}`);
-    await loadTasks();
-    refresh();
-  }catch(e){setSyncDot('err');alert('ลบไม่สำเร็จ');}
-}
-
-// ── SUB MODAL ─────────────────────────────────────────────
-function openSubModal(pid,sid=null){
-  const parent=tasks.find(x=>x.id===pid);if(!parent)return;
-  editingSubParent=pid;editingSubId=sid;
-  const sub=sid?parent.subs.find(x=>x.id===sid):null;
-  document.getElementById('sm-title-lbl').textContent=sid?'แก้ไขงานย่อย':'เพิ่มงานย่อย';
-  document.getElementById('sm-parent-name').textContent='งานหลัก: '+parent.title;
-  document.getElementById('sm-parent-id').value=pid;
-  document.getElementById('sm-id').value=sid||'';
-  document.getElementById('sm-title').value=sub?.title||'';
-  document.getElementById('sm-due').value=sub?.due||parent.due||'';
-  document.getElementById('sm-status').value=sub?.status||'pending';
-  document.getElementById('sm-owner').value=sub?.owner||'';
-  document.getElementById('sm-note').value=sub?.note||'';
-  document.getElementById('sub-modal').classList.add('open');
-  expanded[pid]=true;
-  setTimeout(()=>document.getElementById('sm-title').focus(),100);
-}
-function closeSubModal(){document.getElementById('sub-modal').classList.remove('open');}
-
-async function saveSubTask(){
-  const title=document.getElementById('sm-title').value.trim();
-  if(!title){alert('กรุณากรอกชื่องานย่อย');return;}
-  const pid=editingSubParent;
-  const parent=tasks.find(x=>x.id===pid);if(!parent)return;
-  const data={title,parent_id:pid,system:parent.system,category:parent.category,due:document.getElementById('sm-due').value||null,status:document.getElementById('sm-status').value,owner:document.getElementById('sm-owner').value.trim(),note:document.getElementById('sm-note').value.trim(),sort_order:0};
-  setSyncDot('loading');
-  try{
-    if(editingSubId){
-      await sbPatch(`tasks?id=eq.${editingSubId}`,{title:data.title,due:data.due,status:data.status,owner:data.owner,note:data.note});
-    }else{
-      await sbPost('tasks',data);
-    }
-    closeSubModal();
-    await loadTasks();
-    refresh();
-  }catch(e){setSyncDot('err');alert('บันทึกไม่สำเร็จ: '+e.message);}
-}
-
-async function deleteSubTask(pid,sid){
-  const parent=tasks.find(x=>x.id===pid);
-  const s=parent?.subs.find(x=>x.id===sid);
-  if(!s||!confirm(`ลบงานย่อย "${s.title}"?`))return;
-  setSyncDot('loading');
-  try{
-    await sbDelete(`tasks?id=eq.${sid}`);
-    await loadTasks();
-    refresh();
-  }catch(e){setSyncDot('err');alert('ลบไม่สำเร็จ');}
-}
-
-// ── GANTT ─────────────────────────────────────────────────
-const MONTHS_TH=['ต.ค.68','พ.ย.68','ธ.ค.68','ม.ค.69','ก.พ.69','มี.ค.69','เม.ย.69','พ.ค.69','มิ.ย.69','ก.ค.69','ส.ค.69','ก.ย.69'];
+// ── GANTT ──────────────────────────────────
+const GMONTHS=['ต.ค.68','พ.ย.68','ธ.ค.68','ม.ค.69','ก.พ.69','มี.ค.69','เม.ย.69','พ.ค.69','มิ.ย.69','ก.ค.69','ส.ค.69','ก.ย.69'];
 const Y_START=new Date(2025,9,1),Y_END=new Date(2026,9,30);
 const TOTAL_D=Math.round((Y_END-Y_START)/86400000);
 function pct(d){return Math.max(0,Math.min(100,Math.round((new Date(d)-Y_START)/86400000/TOTAL_D*100)));}
 function renderGantt(){
   const gs=document.getElementById('g-sys').value;
   const list=tasks.filter(t=>!gs||t.system===gs);
-  const LW=200,todayP=pct(new Date());
+  const LW=190,todayP=pct(new Date());
   let h=`<div style="display:grid;grid-template-columns:${LW}px 1fr;border-bottom:1px solid var(--bd)">
-    <div style="padding:8px 10px;font-size:11px;font-weight:600;color:var(--text-m);border-right:1px solid var(--bd)">งาน</div>
-    <div style="display:flex">${MONTHS_TH.map(m=>`<div style="flex:1;text-align:center;font-size:10px;font-weight:600;color:var(--text-m);padding:8px 2px;border-right:1px solid var(--bd-lt)">${m}</div>`).join('')}</div>
+    <div style="padding:7px 9px;font-size:10px;font-weight:600;color:var(--text-m);border-right:1px solid var(--bd)">งาน</div>
+    <div style="display:flex">${GMONTHS.map(m=>`<div style="flex:1;text-align:center;font-size:9px;font-weight:600;color:var(--text-m);padding:7px 2px;border-right:1px solid var(--bd-lt)">${m}</div>`).join('')}</div>
   </div>`;
   list.forEach(t=>{
     if(!t.due)return;
-    const dp=pct(t.due);const bL=Math.max(0,dp-4);const bW=Math.min(6,100-bL);
-    const col=t.status==='done'?'#3B6D11':t.status==='in_progress'?'#185FA5':SYS_COL[t.system]||'#888';
-    h+=`<div style="display:grid;grid-template-columns:${LW}px 1fr;border-bottom:1px solid var(--bd-lt);min-height:34px;align-items:center">
-      <div style="padding:5px 10px;font-size:11px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-right:1px solid var(--bd)" title="${t.title}">${t.title}</div>
-      <div style="position:relative;display:flex;height:34px">
-        ${MONTHS_TH.map(()=>`<div style="flex:1;border-right:1px solid var(--bd-lt)"></div>`).join('')}
-        <div style="position:absolute;top:7px;left:${bL}%;width:${bW}%;height:20px;background:${col};border-radius:3px;display:flex;align-items:center;padding:0 4px;font-size:9px;color:#fff;font-weight:600;overflow:hidden">${fmtDate(t.due)}</div>
-        <div style="position:absolute;top:0;bottom:0;left:${todayP}%;width:2px;background:#E24B4A;opacity:.6;pointer-events:none"></div>
+    const dp=pct(t.due);const bL=Math.max(0,dp-3);const bW=Math.min(5,100-bL);
+    const col=t.status==='done'?'#3B6D11':SYS_COL[t.system]||'#888';
+    h+=`<div style="display:grid;grid-template-columns:${LW}px 1fr;border-bottom:1px solid var(--bd-lt);min-height:32px;align-items:center">
+      <div style="padding:4px 9px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-right:1px solid var(--bd)" title="${t.title}">${t.title}</div>
+      <div style="position:relative;display:flex;height:32px">
+        ${GMONTHS.map(()=>`<div style="flex:1;border-right:1px solid var(--bd-lt)"></div>`).join('')}
+        <div style="position:absolute;top:6px;left:${bL}%;width:${bW}%;height:20px;background:${col};border-radius:3px;display:flex;align-items:center;padding:0 4px;font-size:9px;color:#fff;font-weight:600;overflow:hidden;white-space:nowrap">${fmtDateShort(t.due)}</div>
+        <div style="position:absolute;top:0;bottom:0;left:${todayP}%;width:2px;background:#E24B4A;opacity:.5;pointer-events:none"></div>
       </div>
     </div>`;
   });
   document.getElementById('gantt-wrap').innerHTML=h;
 }
 
-// ── PAGES ─────────────────────────────────────────────────
+// ── DOCS PAGE ──────────────────────────────
+let docFilterPanelOpen=false;
+const DOC_SEED=[
+  {name:'นโยบายคุณภาพและความปลอดภัยอาหาร',code:'QP-001',system:'HACCP',freq:'รายปี',owner:'สบค.ฝผม.',last:'2025-01-15',next:'2026-01-15',reviewed:true},
+  {name:'ขั้นตอนการทำความสะอาดและฆ่าเชื้อ',code:'SP-002',system:'HACCP',freq:'รายเดือน',owner:'สบค.ฝผม.',last:'2026-05-20',next:'2026-06-20',reviewed:false},
+  {name:'แผนการตรวจสอบ CCP และ Monitoring',code:'CP-003',system:'HACCP',freq:'รายปี',owner:'คณะทำงาน',last:'2025-06-01',next:'2026-06-01',reviewed:false},
+  {name:'ทะเบียนกฎหมายสิ่งแวดล้อมที่เกี่ยวข้อง',code:'EP-001',system:'ISO14001',freq:'รายปี',owner:'สบค.ฝผม.',last:'2025-04-10',next:'2026-04-10',reviewed:true},
+  {name:'แผนการจัดการด้านสิ่งแวดล้อม',code:'EP-002',system:'ISO14001',freq:'รายปี',owner:'คณะทำงาน',last:'2024-07-01',next:'2025-07-01',reviewed:false},
+  {name:'ขั้นตอนการประเมินความเสี่ยงด้านความปลอดภัย',code:'OH-001',system:'ISO45001',freq:'รายปี',owner:'สบค.ฝผม.',last:'2026-03-01',next:'2027-03-01',reviewed:true},
+  {name:'รายงานผลการตรวจวัดสภาพแวดล้อม',code:'OH-002',system:'ISO45001',freq:'รายเดือน',owner:'สบค.ฝผม.',last:'2026-05-15',next:'2026-06-15',reviewed:false},
+];
+
+function docStatus(d){
+  if(d.reviewed)return'done';
+  if(!d.next)return'pending';
+  const dv=dd(d.next);
+  if(dv<0)return'over';
+  return'pending';
+}
+function toggleDocFilter(){
+  docFilterPanelOpen=!docFilterPanelOpen;
+  document.getElementById('doc-filter-panel').classList.toggle('open',docFilterPanelOpen);
+  document.getElementById('doc-filter-btn').classList.toggle('active',docFilterPanelOpen);
+}
+function applyDocFilter(){
+  const s=document.getElementById('df-sys').value;
+  const f=document.getElementById('df-freq').value;
+  const st=document.getElementById('df-st').value;
+  const active=[s,f,st].filter(Boolean);
+  document.getElementById('doc-filter-count').textContent=active.length;
+  document.getElementById('doc-filter-count').style.display=active.length?'inline-flex':'none';
+  const chips=[];
+  if(s)chips.push({label:s,clear:()=>{document.getElementById('df-sys').value='';applyDocFilter();}});
+  if(f)chips.push({label:f,clear:()=>{document.getElementById('df-freq').value='';applyDocFilter();}});
+  if(st)chips.push({label:{done:'ทบทวนแล้ว',pending:'ยังไม่ทบทวน',over:'เกินกำหนด'}[st]||st,clear:()=>{document.getElementById('df-st').value='';applyDocFilter();}});
+  document.getElementById('doc-chips').innerHTML=chips.map((_,i)=>`<span class="chip" onclick="chips_arr[${i}].clear()">✕ ${chips[i].label}</span>`).join('');
+  window.chips_arr=chips;
+  renderDocs();
+}
+function clearDocFilter(){
+  ['df-sys','df-freq','df-st'].forEach(id=>document.getElementById(id).value='');
+  applyDocFilter();
+}
+function renderDocs(){
+  const search=(document.getElementById('doc-search').value||'').toLowerCase();
+  const fs=document.getElementById('df-sys').value;
+  const ff=document.getElementById('df-freq').value;
+  const fst=document.getElementById('df-st').value;
+  const data=DOC_SEED.filter(d=>{
+    if(search&&!d.name.toLowerCase().includes(search)&&!(d.code||'').toLowerCase().includes(search)&&!(d.owner||'').toLowerCase().includes(search))return false;
+    if(fs&&d.system!==fs)return false;
+    if(ff&&d.freq!==ff)return false;
+    if(fst&&docStatus(d)!==fst)return false;
+    return true;
+  });
+  // progress bars
+  document.getElementById('doc-prog-bars').innerHTML=SYS_LIST.map(s=>{
+    const sd=DOC_SEED.filter(d=>d.system===s);
+    const don=sd.filter(d=>d.reviewed).length;
+    const tot=sd.length;
+    if(!tot)return'';
+    const p=Math.round(don/tot*100);
+    return`<div class="pi"><div class="pi-lbl"><span>${SYS_NAME[s]}</span><span style="font-size:11px;font-weight:600;color:${SYS_COL[s]}">${don}/${tot} (${p}%)</span></div><div class="pi-bar"><div class="pi-fill" style="width:${p}%;background:${SYS_COL[s]}"></div></div></div>`;
+  }).join('');
+  document.getElementById('doc-tbody').innerHTML=data.map((d,i)=>{
+    const st=docStatus(d);
+    let pill='';
+    if(st==='done') pill='<span class="dp done">✓ ทบทวนแล้ว</span>';
+    else if(st==='over'){const dv=dd(d.next);pill=`<span class="dp over">เกิน ${Math.abs(dv)} วัน</span>`;}
+    else if(dd(d.next)<=30) pill=`<span class="dp w30">🟡 ${dd(d.next)} วัน</span>`;
+    else pill=`<span class="dp pend">${dd(d.next)} วัน</span>`;
+    return`<tr>
+      <td><div class="doc-name">${d.name}</div><div class="doc-code">${d.code||''}</div></td>
+      <td><span class="badge ${SYS_CLS[d.system]}">${d.system}</span></td>
+      <td><span class="freq">${d.freq}</span></td>
+      <td style="font-size:11px;color:var(--text-m)">${fmtDateShort(d.last)}</td>
+      <td style="font-size:11px">${fmtDateShort(d.next)}</td>
+      <td style="font-size:11px;color:var(--text-m)">${d.owner||''}</td>
+      <td>${pill}</td>
+      <td style="text-align:center"><input type="checkbox" ${d.reviewed?'checked':''} style="width:15px;height:15px;accent-color:var(--blue);cursor:pointer" onchange="toggleDocReview(${i},this.checked)"></td>
+    </tr>`;
+  }).join('')||'<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--text-m)">ไม่พบรายการ</td></tr>';
+  document.getElementById('doc-count').textContent=`แสดง ${data.length} จาก ${DOC_SEED.length} รายการ`;
+}
+function toggleDocReview(i,checked){DOC_SEED[i].reviewed=checked;renderDocs();}
+
+// MODAL เอกสาร
+let editDocIdx=null;
+function openDocModal(idx=null){
+  editDocIdx=idx;
+  const d=idx!=null?DOC_SEED[idx]:null;
+  document.getElementById('dm-title-lbl').textContent=d?'แก้ไขเอกสาร':'เพิ่มเอกสารใหม่';
+  document.getElementById('dm-name').value=d?.name||'';
+  document.getElementById('dm-code').value=d?.code||'';
+  document.getElementById('dm-sys').value=d?.system||'HACCP';
+  document.getElementById('dm-freq').value=d?.freq||'รายปี';
+  document.getElementById('dm-owner').value=d?.owner||'';
+  document.getElementById('dm-last').value=d?.last||'';
+  document.getElementById('dm-next').value=d?.next||'';
+  document.getElementById('doc-modal').classList.add('open');
+  setTimeout(()=>document.getElementById('dm-name').focus(),100);
+}
+function closeDocModal(){document.getElementById('doc-modal').classList.remove('open');}
+function saveDoc(){
+  const name=document.getElementById('dm-name').value.trim();
+  if(!name){alert('กรุณากรอกชื่อเอกสาร');return;}
+  const d={name,code:document.getElementById('dm-code').value.trim(),system:document.getElementById('dm-sys').value,freq:document.getElementById('dm-freq').value,owner:document.getElementById('dm-owner').value.trim(),last:document.getElementById('dm-last').value||null,next:document.getElementById('dm-next').value||null,reviewed:false};
+  if(editDocIdx!=null) DOC_SEED[editDocIdx]={...DOC_SEED[editDocIdx],...d};
+  else DOC_SEED.push(d);
+  closeDocModal();renderDocs();
+}
+
+// ── PAGES ──────────────────────────────────
 function showPage(p,btn){
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(el=>el.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
   if(btn)btn.classList.add('active');
   if(p==='dashboard')renderDashboard();
-  else if(p==='tasks')renderTasks();
+  else if(p==='plan')renderPlan();
   else if(p==='gantt')renderGantt();
+  else if(p==='docs'){renderDocs();}
 }
-function refresh(){renderDashboard();renderTasks();}
+function refresh(){renderDashboard();if(document.getElementById('page-plan').classList.contains('active'))renderPlan();}
 
-// ── INIT ──────────────────────────────────────────────────
-seedIfEmpty().then(()=>renderDashboard());
+// ── INIT ───────────────────────────────────
+seedIfEmpty().then(()=>{renderDashboard();renderPlanTabs();});
 </script>
 </body>
 </html>
